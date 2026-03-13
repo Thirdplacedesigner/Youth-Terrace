@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus — Sandringham College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════
+   TOKENS
+════════════════════════════════════ */
+:root {
+  --bg:       #09090e;
+  --bg2:      #0e0e16;
+  --bg3:      #12121c;
+  --surface:  #16161f;
+  --surface2: #1c1c28;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.04);
+
+  /* Accent palette */
+  --violet:   #7c6fec;
+  --violet-lt:#a89fff;
+  --violet-glow: rgba(124,111,236,0.22);
+  --emerald:  #34d399;
+  --amber:    #fbbf24;
+  --rose:     #f87171;
+  --sky:      #38bdf8;
+  --coral:    #fb7185;
+
+  --text:     #eeeef6;
+  --muted:    #888899;
+  --dim:      #44445a;
+}
+
+/* ════════════════════════════════════
+   BASE
+════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* Grain texture */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.5;
+}
+
+/* ════════════════════════════════════
+   TYPOGRAPHY
+════════════════════════════════════ */
+h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+.t-display {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.97;
+  letter-spacing: -0.03em;
+}
+
+.t-h2 {
+  font-weight: 800;
+  font-size: clamp(1.85rem, 3.5vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.t-h3 { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.015em; }
+
+.t-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--violet-lt);
+  margin-bottom: 0.9rem;
+  display: block;
+}
+
+.t-body  { font-size: 1rem;   color: var(--muted); line-height: 1.75; }
+.t-body-lg { font-size: 1.1rem; color: var(--muted); line-height: 1.8; font-weight: 300; }
+
+/* ════════════════════════════════════
+   LAYOUT
+════════════════════════════════════ */
+.wrap  { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+.wrap-sm { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 7rem 0; }
+
+/* ════════════════════════════════════
+   NAV
+════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 0 2.5rem;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(9,9,14,0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+
+.nav-logo {
+  display: flex; align-items: baseline; gap: 0.6rem;
+}
+
+.nav-logo-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #fff 40%, var(--violet-lt));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.nav-logo-school {
+  font-size: 0.75rem; font-weight: 500;
+  color: var(--muted);
+  padding: 0.2rem 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600; font-size: 0.88rem;
+  cursor: pointer; text-decoration: none; border: none;
+  transition: all 0.22s;
+}
+
+.btn-primary {
+  background: var(--violet); color: #fff;
+  box-shadow: 0 0 28px var(--violet-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 48px var(--violet-glow), 0 8px 28px rgba(124,111,236,0.35);
+}
+
+.btn-ghost {
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: var(--surface); border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
+
+/* ════════════════════════════════════
+   HERO
+════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: 64px;
+  position: relative; overflow: hidden;
+}
+
+.hero-orbs {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 50% at 75% 35%, rgba(124,111,236,0.11) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 15% 75%, rgba(52,211,153,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 45% at 50% 110%, rgba(248,113,113,0.05) 0%, transparent 60%);
+}
+
+.hero-mesh {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 75%);
+}
+
+.hero-inner { position: relative; z-index: 2; }
+
+.hero-pill {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  background: rgba(124,111,236,0.1);
+  border: 1px solid rgba(124,111,236,0.28);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--violet-lt);
+  margin-bottom: 2rem;
+  animation: fadeUp 0.7s ease both;
+}
+
+.hero-pill-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 10px var(--emerald);
+  animation: breathe 2.5s ease infinite;
+}
+
+@keyframes breathe {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.5; transform:scale(1.7); }
+}
+
+.hero-title { animation: fadeUp 0.7s ease 0.08s both; }
+
+.hero-school {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  color: var(--muted);
+  margin-top: 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.hero-sub {
+  max-width: 560px;
+  font-size: 1.12rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 1.75rem 0 2.5rem;
+  font-weight: 300;
+  animation: fadeUp 0.7s ease 0.16s both;
+}
+
+.hero-btns {
+  display: flex; gap: 0.85rem; flex-wrap: wrap;
+  animation: fadeUp 0.7s ease 0.24s both;
+}
+
+.hero-tagline {
+  margin-top: 4rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.82rem; font-weight: 600;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  animation: fadeUp 0.7s ease 0.32s both;
+}
+.hero-tagline::before { content:''; width:28px; height:1px; background:var(--dim); }
+
+/* Floating stat cards */
+.hero-aside {
+  position: absolute; right: 4%; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 1rem;
+  width: 290px;
+  animation: slideLeft 0.9s ease 0.4s both;
+}
+
+@keyframes slideLeft {
+  from { opacity:0; transform: translateY(-50%) translateX(28px); }
+  to   { opacity:1; transform: translateY(-50%) translateX(0); }
+}
+
+.hc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.hc:nth-child(1) { animation: hov1 7s ease-in-out infinite; }
+.hc:nth-child(2) { animation: hov2 9s ease-in-out 1.5s infinite; }
+.hc:nth-child(3) { animation: hov1 8s ease-in-out 3s infinite; }
+
+@keyframes hov1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes hov2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+.hc-label {
+  font-size: 0.67rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  margin-bottom: 0.6rem;
+}
+
+.hc-row {
+  display: flex; align-items: center; gap: 0.55rem;
+  font-size: 0.8rem; font-weight: 500; color: var(--text);
+  padding: 0.25rem 0;
+}
+
+.hc-pip { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(18px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════
+   SHARED SECTION HEADER
+════════════════════════════════════ */
+.sec-head { margin-bottom: 4rem; }
+.sec-head.center { text-align: center; }
+.sec-head .t-h2 { margin-bottom: 1rem; }
+.sec-head p { max-width: 560px; }
+.sec-head.center p { margin: 0 auto; }
+
+/* ════════════════════════════════════
+   SECTION 1 — CORE IDEA
+════════════════════════════════════ */
+#core { background: var(--bg2); }
+
+.core-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+}
+
+.core-quote {
+  font-family: 'Syne', sans-serif;
+  font-style: italic;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: rgba(238,238,246,0.88);
+  border-left: 3px solid var(--violet);
+  padding-left: 1.4rem;
+  margin-bottom: 2rem;
+  letter-spacing: -0.015em;
+}
+
+.core-points { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.cp {
+  display: flex; align-items: flex-start; gap: 0.9rem;
+  padding: 1rem 1.15rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.25s;
+}
+.cp:hover { background: var(--surface2); border-color: rgba(124,111,236,0.3); transform: translateX(4px); }
+
+.cp-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+
+.cp h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.15rem; }
+.cp p  { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+.core-values {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.cv {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem;
+  transition: all 0.25s;
+}
+.cv:hover { background: rgba(255,255,255,0.055); border-color: rgba(124,111,236,0.25); transform: translateY(-3px); }
+
+.cv-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
+.cv h4 { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+.cv p  { font-size: 0.78rem; color: var(--dim); line-height: 1.5; }
+
+/* ════════════════════════════════════
+   SECTION 2 — LAYER STRUCTURE DIAGRAM
+════════════════════════════════════ */
+#layers { background: var(--bg3); }
+
+/* 3-layer visual */
+.layer-diagram {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.layer-block {
+  border-radius: 18px;
+  padding: 2rem 2.25rem;
+  border: 1.5px solid;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.layer-block:hover { transform: scale(1.01); }
+
+.layer-block + .layer-block { margin-top: 1.25rem; }
+
+/* Layer connectors */
+.layer-connector {
+  display: flex; align-items: center; justify-content: center;
+  height: 36px; position: relative;
+}
+.layer-connector::before {
+  content: '';
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  width: 2px; height: 100%;
+  background: linear-gradient(180deg, var(--border), var(--border));
+}
+.layer-connector-arrow {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  position: relative; z-index: 1;
+  color: var(--muted);
+}
+
+/* Layer 1 */
+.layer-1 {
+  background: linear-gradient(135deg, rgba(124,111,236,0.12), rgba(124,111,236,0.04));
+  border-color: rgba(124,111,236,0.35);
+}
+
+/* Layer 2 */
+.layer-2 {
+  background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(52,211,153,0.03));
+  border-color: rgba(52,211,153,0.3);
+}
+
+/* Layer 3 */
+.layer-3 {
+  background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,191,36,0.03));
+  border-color: rgba(251,191,36,0.3);
+}
+
+.layer-tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
+}
+
+.layer-title { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.02em; }
+.layer-desc  { font-size: 0.88rem; color: var(--muted); max-width: 520px; }
+
+/* Domain pills grid */
+.domain-pills {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.domain-pill {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.38rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600;
+  background: rgba(52,211,153,0.08);
+  border: 1px solid rgba(52,211,153,0.2);
+  color: #6ee7b7;
+  transition: all 0.2s;
+}
+.domain-pill:hover { background: rgba(52,211,153,0.14); transform: translateY(-2px); }
+
+/* Groups inside layer 3 */
+.groups-preview {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 0.85rem;
+  margin-top: 0;
+}
+
+.gp-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(251,191,36,0.15);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  transition: all 0.22s;
+}
+.gp-card:hover { border-color: rgba(251,191,36,0.35); background: rgba(251,191,36,0.05); transform: translateY(-3px); }
+
+.gp-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.3rem; }
+.gp-name  { font-weight: 700; font-size: 0.88rem; color: var(--text); margin-bottom: 0.2rem; }
+.gp-desc  { font-size: 0.76rem; color: var(--muted); line-height: 1.45; }
+
+/* ════════════════════════════════════
+   SECTION 3 — STUDENT ENTRY FLOW
+════════════════════════════════════ */
+#entry { background: var(--bg2); }
+
+.entry-flow {
+  max-width: 740px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 0;
+}
+
+.ef-step {
+  display: flex; align-items: flex-start; gap: 1.5rem;
+  opacity: 0; transform: translateX(-18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.ef-step.visible { opacity: 1; transform: translateX(0); }
+
+.ef-left {
+  display: flex; flex-direction: column; align-items: center;
+  flex-shrink: 0;
+}
+
+.ef-num {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.9rem;
+  color: #fff; flex-shrink: 0; position: relative; z-index: 1;
+}
+
+.ef-line {
+  width: 2px; flex: 1; min-height: 32px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  margin: 3px 0;
+}
+.ef-step:last-child .ef-line { display: none; }
+
+.ef-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.25rem;
+  flex: 1;
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+
+.ef-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  opacity: 0; transition: opacity 0.3s;
+}
+.ef-step:hover .ef-card { background: var(--surface2); border-color: rgba(124,111,236,0.28); transform: translateX(4px); }
+.ef-step:hover .ef-card::before { opacity: 1; background: linear-gradient(90deg, var(--violet), var(--emerald)); }
+
+.ef-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.ef-card p  { font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+
+.ef-tag {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  margin-top: 0.5rem; padding: 0.18rem 0.7rem;
+  border-radius: 100px; font-size: 0.68rem; font-weight: 700;
+}
+
+/* ════════════════════════════════════
+   SECTION 4 — GROUP MANAGEMENT
+════════════════════════════════════ */
+#groups { background: var(--bg3); }
+
+.groups-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+}
+
+.group-leader-card {
+  background: var(--surface);
+  border: 1.5px solid rgba(124,111,236,0.25);
+  border-radius: 18px;
+  padding: 2rem;
+  position: relative; overflow: hidden;
+}
+
+.group-leader-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--violet-lt));
+}
+
+.glc-crown { font-size: 2.2rem; margin-bottom: 1rem; }
+.glc-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.75rem; }
+.glc-desc  { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+
+.responsibility-list { display: flex; flex-direction: column; gap: 0.7rem; }
+
+.resp-item {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.22s;
+}
+.resp-item:hover { border-color: rgba(124,111,236,0.28); background: rgba(124,111,236,0.05); }
+
+.resp-icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; flex-shrink: 0;
+}
+.resp-item h5 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.1rem; }
+.resp-item p  { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+
+/* Application flow mini diagram */
+.apply-flow {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 2rem;
+}
+
+.af-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text); }
+
+.af-steps { display: flex; flex-direction: column; gap: 0; }
+
+.af-item {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border2);
+  transition: all 0.2s;
+}
+.af-item:last-child { border-bottom: none; }
+.af-item:hover { padding-left: 0.4rem; }
+
+.af-circle {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 800; flex-shrink: 0;
+  font-family: 'Syne', sans-serif;
+}
+
+.af-item span { font-size: 0.85rem; font-weight: 500; }
+
+.af-outcome {
+  margin-top: 1.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+}
+
+.af-result {
+  border-radius: 10px; padding: 0.9rem;
+  text-align: center; font-size: 0.82rem; font-weight: 700;
+}
+
+/* ════════════════════════════════════
+   SECTION 5 — ADMIN BRIDGE DIAGRAM
+════════════════════════════════════ */
+#admin { background: var(--bg2); }
+
+.admin-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+}
+
+/* The bridge diagram */
+.bridge-diagram {
+  position: relative;
+}
+
+/* Tiers */
+.bd-tier {
+  display: flex; gap: 0.6rem; justify-content: center;
+  width: 100%;
+}
+
+.bd-node {
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.78rem; font-weight: 700;
+  text-align: center; line-height: 1.3;
+  border: 1.5px solid;
+  transition: all 0.22s;
+  flex: 1;
+  max-width: 120px;
+}
+.bd-node:hover { transform: translateY(-3px); }
+
+.bd-ext  { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.28); color: #7dd3fc; }
+.bd-adm  { background: rgba(124,111,236,0.12); border-color: rgba(124,111,236,0.4); color: #c4bbff; font-size: 0.9rem; padding: 1rem; }
+.bd-dom  { background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.25); color: #6ee7b7; }
+.bd-grp  { background: rgba(255,255,255,0.03); border-color: var(--border); color: var(--muted); font-size: 0.72rem; }
+
+.bd-conn {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0.3rem 0;
+}
+
+.bd-line { width: 2px; height: 22px; background: var(--border); }
+.bd-arr  {
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid var(--dim);
+}
+
+.admin-text { }
+.admin-text .t-h2 { margin-bottom: 1rem; }
+.admin-text .t-body-lg { margin-bottom: 2rem; }
+
+.admin-cards { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.adm-card {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  padding: 1rem 1.15rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.22s;
+}
+.adm-card:hover { border-color: rgba(124,111,236,0.3); transform: translateX(4px); background: var(--surface2); }
+
+.adm-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.adm-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.12rem; }
+.adm-card p  { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+/* ════════════════════════════════════
+   SECTION 6 — FULL SYSTEM MAP
+════════════════════════════════════ */
+#system { background: var(--bg3); }
+
+.system-map {
+  max-width: 880px; margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+
+.sm-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sm-node {
+  flex: 1; min-width: 120px; max-width: 180px;
+  padding: 1rem 0.75rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1.5px solid;
+  transition: all 0.25s;
+  cursor: default;
+}
+.sm-node:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.3); }
+
+.sm-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+.sm-name { font-weight: 700; font-size: 0.82rem; line-height: 1.3; }
+.sm-sub  { font-size: 0.7rem; color: var(--muted); margin-top: 0.15rem; }
+
+.sm-arrow {
+  color: var(--dim); font-size: 1.1rem;
+  flex-shrink: 0; padding: 0 0.3rem;
+}
+
+.sm-section-label {
+  text-align: center;
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--muted); padding: 0.6rem 0;
+  position: relative;
+}
+
+.sm-section-label::before, .sm-section-label::after {
+  content: ''; position: absolute; top: 50%;
+  width: 35%; height: 1px; background: var(--border);
+}
+.sm-section-label::before { left: 0; }
+.sm-section-label::after  { right: 0; }
+
+.sm-divider {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.5rem 0;
+}
+.sm-divider-line { width: 2px; height: 24px; background: var(--border); }
+.sm-divider-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg3);
+}
+
+/* ════════════════════════════════════
+   SECTION 7 — JOIN FORM
+════════════════════════════════════ */
+#join { background: var(--bg2); }
+
+.join-wrap {
+  display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: start;
+}
+
+.join-left { }
+.join-left .t-h2 { margin-bottom: 1rem; }
+.join-left .t-body-lg { margin-bottom: 2rem; }
+
+.join-discord-block {
+  background: #111214;
+  border: 1px solid rgba(88,101,242,0.25);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  margin-top: 2rem;
+  transition: all 0.25s;
+}
+.join-discord-block:hover { border-color: rgba(88,101,242,0.5); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(88,101,242,0.15); }
+
+.jdb-icon { font-size: 2rem; }
+.jdb-text h4 { font-weight: 700; color: var(--text); font-size: 0.95rem; margin-bottom: 0.2rem; }
+.jdb-text p  { font-size: 0.8rem; color: var(--muted); }
+
+.join-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.25rem;
+}
+
+.jf-title { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+
+.field { margin-bottom: 1.1rem; }
+.field label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 0.4rem; letter-spacing: 0.02em; }
+
+.field input, .field select, .field textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--violet);
+  box-shadow: 0 0 0 3px rgba(124,111,236,0.12);
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--dim); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.45rem; }
+
+.chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent; color: var(--muted);
+  font-size: 0.77rem; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: all 0.18s;
+}
+.chip:hover, .chip.on { background: rgba(124,111,236,0.15); border-color: rgba(124,111,236,0.4); color: var(--violet-lt); }
+
+.btn-submit {
+  width: 100%; padding: 0.9rem;
+  background: var(--violet); color: #fff; border: none;
+  border-radius: 10px;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s;
+  box-shadow: 0 0 28px var(--violet-glow);
+  margin-top: 0.5rem;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 0 48px var(--violet-glow), 0 8px 28px rgba(124,111,236,0.3); }
+
+/* ════════════════════════════════════
+   FOOTER
+════════════════════════════════════ */
+footer {
+  background: var(--bg3);
+  border-top: 1px solid var(--border);
+  padding: 3rem 0;
+}
+
+.foot-inner {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+}
+
+.foot-brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem; background: linear-gradient(135deg,#fff,var(--violet-lt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.foot-school { font-size: 0.75rem; color: var(--dim); margin-top: 0.2rem; }
+
+.foot-links { display: flex; gap: 2rem; }
+.foot-links a { font-size: 0.83rem; color: var(--dim); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+.foot-links a:hover { color: var(--text); }
+
+.foot-copy { font-size: 0.75rem; color: var(--dim); }
+
+/* ════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════ */
+@media (max-width: 920px) {
+  .hero-aside { display: none; }
+  .core-grid, .groups-layout, .admin-layout, .join-wrap { grid-template-columns: 1fr; gap: 3rem; }
+  .core-values { grid-template-columns: 1fr 1fr; }
+  .groups-preview { grid-template-columns: 1fr 1fr; }
+  nav .nav-links { display: none; }
+  .sm-row { justify-content: center; }
+  .sm-arrow { display: none; }
+  .foot-inner { flex-direction: column; text-align: center; }
+  .foot-links { justify-content: center; }
+}
+
+@media (max-width: 600px) {
+  .core-values { grid-template-columns: 1fr; }
+  .groups-preview { grid-template-columns: 1fr; }
+  .af-outcome { grid-template-columns: 1fr; }
+  .bd-tier { flex-wrap: wrap; justify-content: center; }
+  .sm-row { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="nav">
+  <div class="nav-logo">
+    <span class="nav-logo-name">Nexus</span>
+    <span class="nav-logo-school">Sandringham College</span>
+  </div>
+  <div class="nav-links">
+    <a href="#core">About</a>
+    <a href="#layers">Structure</a>
+    <a href="#entry">How to Join</a>
+    <a href="#groups">Groups</a>
+    <a href="#admin">Admin</a>
+    <a href="#join">Get Involved</a>
+  </div>
+  <a href="#join" class="btn btn-primary" style="font-size:0.82rem; padding:0.55rem 1.2rem;">Join Now →</a>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="hero-orbs"></div>
+  <div class="hero-mesh"></div>
+
+  <div class="wrap" style="position:relative; z-index:2;">
+    <div class="hero-inner">
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        Student Community Platform · Sandringham College
+      </div>
+
+      <h1 class="t-display hero-title">
+        Nexus
+        <span class="hero-school">Sandringham College</span>
+      </h1>
+
+      <p class="hero-sub">
+        A student-driven digital community where ideas connect.<br>
+        Explore your interests, join discussion groups, and collaborate with people who actually think like you.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#layers" class="btn btn-primary">Explore the Platform →</a>
+        <a href="#join" class="btn btn-ghost">Join the Community</a>
+      </div>
+
+      <p class="hero-tagline">Built by students. Powered by curiosity.</p>
+    </div>
+  </div>
+
+  <!-- Floating info cards -->
+  <div class="hero-aside">
+    <div class="hc">
+      <div class="hc-label" style="color:var(--emerald)">🗂️ Interest Domains</div>
+      <div class="hc-row"><span class="hc-pip" style="background:#34d399"></span> Social Discussion</div>
+      <div class="hc-row"><span class="hc-pip" style="background:#a78bfa"></span> Art</div>
+      <div class="hc-row"><span class="hc-pip" style="background:#34d399"></span> Environment</div>
+      <div class="hc-row"><span class="hc-pip" style="background:#fb7185"></span> Anime & Media</div>
+      <div class="hc-row" style="color:var(--dim); font-size:0.75rem; padding-top:0.3rem;">+ 7 more domains</div>
+    </div>
+    <div class="hc">
+      <div class="hc-label" style="color:var(--violet-lt)">💬 Active in Politics</div>
+      <div class="hc-row"><span class="hc-pip" style="background:#7c6fec"></span> Group A — Political Discussion</div>
+      <div class="hc-row"><span class="hc-pip" style="background:#38bdf8"></span> Group B — Global Issues</div>
+      <div class="hc-row"><span class="hc-pip" style="background:#fbbf24"></span> Group C — Philosophy</div>
+    </div>
+    <div class="hc">
+      <div class="hc-label" style="color:var(--amber)">⚡ Platform Layers</div>
+      <div class="hc-row" style="font-size:0.78rem; flex-direction:column; align-items:flex-start; gap:0.4rem; padding:0">
+        <span style="background:rgba(124,111,236,0.12); border:1px solid rgba(124,111,236,0.3); border-radius:6px; padding:0.3rem 0.6rem; width:100%; color:#a89fff;">🏫 Platform</span>
+        <span style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.25); border-radius:6px; padding:0.3rem 0.6rem; width:100%; color:#6ee7b7; margin-left:1rem;">🗂️ Interest Domain</span>
+        <span style="background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.2); border-radius:6px; padding:0.3rem 0.6rem; width:100%; color:#fcd34d; margin-left:2rem;">💬 Discussion Group</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CORE IDEA ══════════════ -->
+<section id="core">
+  <div class="wrap">
+    <div class="core-grid">
+
+      <div class="reveal">
+        <span class="t-label">What is Nexus?</span>
+        <h2 class="t-h2" style="margin-bottom:1.2rem;">A new kind of space for Sandringham students.</h2>
+        <div class="core-quote">"A platform where curiosity meets community — and discussion leads to action."</div>
+        <p class="t-body-lg">Nexus is a digital space built exclusively for Sandringham College students. It's organised around your real interests — not your year level or classes. Join the groups that actually excite you, talk to people who think like you, and go deeper than a classroom ever allows.</p>
+
+        <div class="core-values">
+          <div class="cv">
+            <div class="cv-icon">💬</div>
+            <h4>Real Discussion</h4>
+            <p>Structured conversations on topics that actually matter to you — not just small talk.</p>
+          </div>
+          <div class="cv">
+            <div class="cv-icon">🔗</div>
+            <h4>New Connections</h4>
+            <p>Meet students across year levels who share your curiosity and passion.</p>
+          </div>
+          <div class="cv">
+            <div class="cv-icon">🚀</div>
+            <h4>Student-Led</h4>
+            <p>Every group is run by a student leader. You set the agenda. You drive the discussions.</p>
+          </div>
+          <div class="cv">
+            <div class="cv-icon">🛡️</div>
+            <h4>Safe & Structured</h4>
+            <p>An admin team maintains safety, guidelines, and a link with the school community.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="core-points reveal" style="transition-delay:0.12s">
+        <div class="cp">
+          <div class="cp-icon" style="background:rgba(124,111,236,0.12)">🌐</div>
+          <div>
+            <h4>Discord-Based Platform</h4>
+            <p>Nexus lives on Discord — an app students already know and use. No new software, no learning curve.</p>
+          </div>
+        </div>
+        <div class="cp">
+          <div class="cp-icon" style="background:rgba(52,211,153,0.1)">🗂️</div>
+          <div>
+            <h4>Organised by Interest Domains</h4>
+            <p>The server is divided into broad areas of interest — Social Discussion, Art, Sports, Startups, and more. Each domain contains focused discussion groups.</p>
+          </div>
+        </div>
+        <div class="cp">
+          <div class="cp-icon" style="background:rgba(251,191,36,0.1)">📝</div>
+          <div>
+            <h4>Application-Based Groups</h4>
+            <p>You don't automatically enter a group. You apply with a short message, and a student leader reviews your request. This keeps groups tight-knit and high quality.</p>
+          </div>
+        </div>
+        <div class="cp">
+          <div class="cp-icon" style="background:rgba(56,189,248,0.1)">🤝</div>
+          <div>
+            <h4>Admin Team as a Bridge</h4>
+            <p>An admin team doesn't run discussions — they connect student communities with teachers, external organisations, and other schools.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 3-LAYER STRUCTURE ══════════════ -->
+<section id="layers">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="t-label">Community Structure</span>
+      <h2 class="t-h2">Three Layers. One Platform.</h2>
+      <p class="t-body-lg">Nexus is organised into three clear layers — from the whole school community down to focused discussion groups.</p>
+    </div>
+
+    <div class="layer-diagram reveal" style="transition-delay:0.1s">
+
+      <!-- LAYER 1 -->
+      <div class="layer-block layer-1">
+        <div class="layer-tag" style="background:rgba(124,111,236,0.12); border:1px solid rgba(124,111,236,0.3); color:var(--violet-lt);">
+          Layer 1 · The Platform
+        </div>
+        <div class="layer-title">⚡ Nexus — Sandringham College</div>
+        <p class="layer-desc">The overarching community for all Sandringham College students. One shared Discord server that everyone enters first.</p>
+      </div>
+
+      <div class="layer-connector"><div class="layer-connector-arrow">↓</div></div>
+
+      <!-- LAYER 2 -->
+      <div class="layer-block layer-2">
+        <div class="layer-tag" style="background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.25); color:#6ee7b7;">
+          Layer 2 · Interest Domains
+        </div>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
+          <div style="flex:1; min-width:260px;">
+            <div class="layer-title">🗂️ 11 Interest Areas — Each with a Domain Leader</div>
+            <p class="layer-desc">Each domain has a <strong style="color:var(--emerald)">Domain Leader</strong> — a student who oversees all discussion groups within that area. They listen to their group leaders, collect emerging needs and visions, and act as the voice of the domain when connecting upward to the Admin Team.</p>
+            <div class="domain-pills" style="margin-top:1rem;">
+              <span class="domain-pill">🎨 Art</span>
+              <span class="domain-pill">🗣️ Social Discussion</span>
+              <span class="domain-pill">🌱 Environment & Activism</span>
+              <span class="domain-pill">🍥 Anime & Media</span>
+              <span class="domain-pill">⚽ Sports</span>
+              <span class="domain-pill">🚀 Startups</span>
+              <span class="domain-pill">🎲 Board Games</span>
+              <span class="domain-pill">🃏 Card Games</span>
+              <span class="domain-pill">📚 Book Reading</span>
+              <span class="domain-pill">🏔️ Outdoor Activities</span>
+              <span class="domain-pill">🏃 Running</span>
+            </div>
+          </div>
+          <!-- Domain leader role card -->
+          <div style="min-width:240px; max-width:300px; background:rgba(52,211,153,0.06); border:1.5px solid rgba(52,211,153,0.22); border-radius:14px; padding:1.25rem;">
+            <div style="font-size:1.5rem; margin-bottom:0.6rem;">🏅</div>
+            <div style="font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; color:#6ee7b7; margin-bottom:0.5rem;">Domain Leader Role</div>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+              <div style="display:flex; gap:0.5rem; align-items:flex-start; font-size:0.8rem; color:var(--muted);">
+                <span style="color:var(--emerald); flex-shrink:0;">↔</span>
+                <span>Meets regularly with all Group Leaders inside the domain</span>
+              </div>
+              <div style="display:flex; gap:0.5rem; align-items:flex-start; font-size:0.8rem; color:var(--muted);">
+                <span style="color:var(--emerald); flex-shrink:0;">📋</span>
+                <span>Collects member feedback, visions, and requests from Layer 3</span>
+              </div>
+              <div style="display:flex; gap:0.5rem; align-items:flex-start; font-size:0.8rem; color:var(--muted);">
+                <span style="color:var(--emerald); flex-shrink:0;">📤</span>
+                <span>If NPO sessions or inter-school exchanges are needed, compiles a proposal and submits to Admin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-connector"><div class="layer-connector-arrow">↓</div></div>
+
+      <!-- LAYER 3 -->
+      <div class="layer-block layer-3">
+        <div class="layer-tag" style="background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.25); color:#fcd34d;">
+          Layer 3 · Discussion Groups
+        </div>
+        <div class="layer-title">💬 Topic-Specific Groups — The Real Conversations Happen Here</div>
+        <p class="layer-desc" style="margin-bottom:1.25rem;">Inside each domain, groups are <strong style="color:var(--amber)">focused on a single specific topic</strong>. Not "Social Discussion" in general — but <em>War</em>, or <em>Poverty</em>, or <em>Digital Platforms</em>. That specificity is what makes conversations go deep.</p>
+
+        <!-- Interactive domain tabs -->
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem;" id="domain-tabs">
+          <button class="domain-tab-btn active" onclick="switchDomain('social')" style="padding:0.35rem 0.9rem; border-radius:100px; border:1px solid rgba(251,191,36,0.35); background:rgba(251,191,36,0.12); color:#fcd34d; font-size:0.78rem; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.18s;">🗣️ Social Discussion</button>
+          <button class="domain-tab-btn" onclick="switchDomain('env')" style="padding:0.35rem 0.9rem; border-radius:100px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:0.78rem; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.18s;">🌱 Environment</button>
+          <button class="domain-tab-btn" onclick="switchDomain('startups')" style="padding:0.35rem 0.9rem; border-radius:100px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:0.78rem; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.18s;">🚀 Startups</button>
+          <button class="domain-tab-btn" onclick="switchDomain('art')" style="padding:0.35rem 0.9rem; border-radius:100px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:0.78rem; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.18s;">🎨 Art</button>
+        </div>
+
+        <div id="groups-display" class="groups-preview" style="grid-template-columns: repeat(4,1fr);"></div>
+
+        <!-- Create your own group CTA -->
+        <div style="margin-top:1.5rem; background:linear-gradient(135deg, rgba(124,111,236,0.1), rgba(52,211,153,0.06)); border:1.5px dashed rgba(124,111,236,0.35); border-radius:14px; padding:1.4rem 1.5rem; display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap;">
+          <div style="font-size:2rem;">✨</div>
+          <div style="flex:1; min-width:200px;">
+            <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; color:var(--text); margin-bottom:0.3rem;">Can't find your group? Create it yourself.</div>
+            <p style="font-size:0.84rem; color:var(--muted); line-height:1.6;">If none of the existing groups match what you want to talk about, you can <strong style="color:var(--violet-lt)">propose a brand new group</strong>. Write your vision, pitch it to the Domain Leader, and if it resonates — your group gets launched. Nexus grows because students build it.</p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.5rem; align-items:center;">
+            <div style="background:rgba(124,111,236,0.15); border:1px solid rgba(124,111,236,0.35); border-radius:10px; padding:0.6rem 1rem; font-size:0.78rem; font-weight:700; color:var(--violet-lt); text-align:center; white-space:nowrap;">📝 Propose a group</div>
+            <div style="background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.25); border-radius:10px; padding:0.6rem 1rem; font-size:0.78rem; font-weight:700; color:var(--emerald); text-align:center; white-space:nowrap;">✅ Leader approves</div>
+            <div style="background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.25); border-radius:10px; padding:0.6rem 1rem; font-size:0.78rem; font-weight:700; color:var(--amber); text-align:center; white-space:nowrap;">🚀 Your group launches</div>
+          </div>
+        </div>
+
+        <p style="margin-top:1rem; font-size:0.8rem; color:var(--dim);">👑 When you create a group, <strong style="color:var(--text)">you become its first Group Leader</strong> — responsible for recruiting members, shaping discussions, and feeding insights back up to the Domain Leader.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ STUDENT ENTRY FLOW ══════════════ -->
+<section id="entry">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="t-label">How Students Join</span>
+      <h2 class="t-h2">8 Steps from New Member<br>to Active Participant.</h2>
+      <p class="t-body-lg">Every student goes through this clear onboarding process before they become a full group member.</p>
+    </div>
+
+    <div class="entry-flow">
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#7c6fec,#a78bfa)">1</div>
+          <div class="ef-line"></div>
+        </div>
+        <div class="ef-card">
+          <h4>🔗 Join the Discord Server</h4>
+          <p>The student clicks the invite link and enters the Nexus server for the first time. No application needed — the server is open to all Sandringham students.</p>
+          <span class="ef-tag" style="background:rgba(124,111,236,0.1); border:1px solid rgba(124,111,236,0.25); color:var(--violet-lt);">Open to all SC students</span>
+        </div>
+      </div>
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#a78bfa,#38bdf8)">2</div>
+          <div class="ef-line"></div>
+        </div>
+        <div class="ef-card">
+          <h4>📖 Read the Introduction</h4>
+          <p>They start in #welcome and read the explanation of what Nexus is, how it works, and what it offers. This builds context before anything else.</p>
+          <span class="ef-tag" style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.22); color:#7dd3fc;">Required reading</span>
+        </div>
+      </div>
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#38bdf8,#34d399)">3</div>
+          <div class="ef-line"></div>
+        </div>
+        <div class="ef-card">
+          <h4>📋 Read the Rules & Guidelines</h4>
+          <p>They review the community guidelines in #rules. Understanding what's expected keeps the platform respectful and high-quality for everyone.</p>
+          <span class="ef-tag" style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.22); color:var(--emerald);">Community standards</span>
+        </div>
+      </div>
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#34d399,#fbbf24)">4</div>
+          <div class="ef-line"></div>
+        </div>
+        <div class="ef-card">
+          <h4>👋 Write a Self-Introduction</h4>
+          <p>The student posts in #introduce-yourself — sharing who they are, their interests, and what they're hoping to find in Nexus. This is their first real community interaction.</p>
+          <span class="ef-tag" style="background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.22); color:var(--amber);">First connection point</span>
+        </div>
+      </div>
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#fbbf24,#f87171)">5</div>
+          <div class="ef-line"></div>
+        </div>
+        <div class="ef-card">
+          <h4>🗺️ Explore Interest Domains</h4>
+          <p>They browse the different domain categories — reading channel descriptions, looking at ongoing conversations, and getting a feel for each community's vibe and culture.</p>
+          <span class="ef-tag" style="background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.22); color:#fca5a5;">Browse freely</span>
+        </div>
+      </div>
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#f87171,#fb7185)">6</div>
+          <div class="ef-line"></div>
+        </div>
+        <div class="ef-card">
+          <h4>🎯 Find a Group to Apply For</h4>
+          <p>Once they've found a discussion group that genuinely interests them, they identify it as the one they want to be part of — a specific group within a specific domain.</p>
+          <span class="ef-tag" style="background:rgba(251,113,133,0.08); border:1px solid rgba(251,113,133,0.22); color:var(--coral);">Interest match</span>
+        </div>
+      </div>
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#fb7185,#a78bfa)">7</div>
+          <div class="ef-line"></div>
+        </div>
+        <div class="ef-card">
+          <h4>📝 Submit a Short Application</h4>
+          <p>The student writes a short message explaining why they want to join that specific group — what they'd bring to conversations and why this topic matters to them.</p>
+          <span class="ef-tag" style="background:rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.25); color:var(--violet-lt);">Written by the student</span>
+        </div>
+      </div>
+
+      <div class="ef-step">
+        <div class="ef-left">
+          <div class="ef-num" style="background:linear-gradient(135deg,#7c6fec,#34d399)">8</div>
+        </div>
+        <div class="ef-card" style="border-color:rgba(52,211,153,0.3); background:rgba(52,211,153,0.04);">
+          <h4>✅ Group Leader Reviews & Decides</h4>
+          <p>The student group leader reads the application and makes a decision — accept or decline. If accepted, the student becomes a full member of the group and can participate in all discussions.</p>
+          <div style="display:flex; gap:0.6rem; margin-top:0.6rem; flex-wrap:wrap;">
+            <span class="ef-tag" style="background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.3); color:var(--emerald);">✓ Accepted → Full member</span>
+            <span class="ef-tag" style="background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.22); color:#fca5a5;">✗ Declined → Try another group</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ GROUP MANAGEMENT ══════════════ -->
+<section id="groups">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="t-label">Group Structure</span>
+      <h2 class="t-h2">Every Group Has a Student Leader.</h2>
+      <p class="t-body-lg">Groups aren't self-managing. Each has a named student leader who takes responsibility for the community inside their group.</p>
+    </div>
+
+    <div class="groups-layout">
+
+      <div class="reveal">
+        <div class="group-leader-card">
+          <div class="glc-crown">👑</div>
+          <div class="glc-title">The Student Group Leader</div>
+          <p class="glc-desc">Each discussion group is managed by a student — not a teacher. The leader is a community member who takes on responsibility for the group's quality, culture, and membership.</p>
+          <div class="responsibility-list">
+            <div class="resp-item">
+              <div class="resp-icon" style="background:rgba(124,111,236,0.12)">📝</div>
+              <div>
+                <h5>Review Applications</h5>
+                <p>Reads incoming applications and evaluates whether the student would be a good fit for the group's culture and discussions.</p>
+              </div>
+            </div>
+            <div class="resp-item">
+              <div class="resp-icon" style="background:rgba(52,211,153,0.1)">✅</div>
+              <div>
+                <h5>Accept or Decline Members</h5>
+                <p>Makes the final call on membership. Keeps group sizes manageable and discussions focused.</p>
+              </div>
+            </div>
+            <div class="resp-item">
+              <div class="resp-icon" style="background:rgba(251,191,36,0.1)">🗣️</div>
+              <div>
+                <h5>Help Organise Discussions</h5>
+                <p>Suggests topics, prompts conversation when things go quiet, and keeps the group engaged and active.</p>
+              </div>
+            </div>
+            <div class="resp-item">
+              <div class="resp-icon" style="background:rgba(248,113,113,0.1)">🛡️</div>
+              <div>
+                <h5>Enforce Group Standards</h5>
+                <p>Upholds community guidelines within the group. Escalates issues to the admin team when necessary.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:0.15s">
+        <div class="apply-flow">
+          <div class="af-title">📋 The Application & Review Flow</div>
+          <div class="af-steps">
+            <div class="af-item">
+              <div class="af-circle" style="background:rgba(124,111,236,0.15); color:var(--violet-lt); border:1px solid rgba(124,111,236,0.3);">1</div>
+              <span>Student discovers a group in a domain</span>
+            </div>
+            <div class="af-item">
+              <div class="af-circle" style="background:rgba(56,189,248,0.12); color:#7dd3fc; border:1px solid rgba(56,189,248,0.28);">2</div>
+              <span>Student writes their application message</span>
+            </div>
+            <div class="af-item">
+              <div class="af-circle" style="background:rgba(251,191,36,0.1); color:var(--amber); border:1px solid rgba(251,191,36,0.3);">3</div>
+              <span>Application is sent to the group leader</span>
+            </div>
+            <div class="af-item">
+              <div class="af-circle" style="background:rgba(248,113,113,0.1); color:#fca5a5; border:1px solid rgba(248,113,113,0.25);">4</div>
+              <span>Group leader reads and considers the application</span>
+            </div>
+            <div class="af-item">
+              <div class="af-circle" style="background:rgba(52,211,153,0.1); color:var(--emerald); border:1px solid rgba(52,211,153,0.3);">5</div>
+              <span>Leader makes an accept / decline decision</span>
+            </div>
+            <div class="af-item">
+              <div class="af-circle" style="background:rgba(124,111,236,0.12); color:var(--violet-lt); border:1px solid rgba(124,111,236,0.28);">6</div>
+              <span>Student is notified on Discord</span>
+            </div>
+          </div>
+          <div class="af-outcome">
+            <div class="af-result" style="background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.25); color:var(--emerald);">
+              ✅ Accepted<br><span style="font-weight:400; font-size:0.75rem; color:var(--muted);">Full group member</span>
+            </div>
+            <div class="af-result" style="background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.2); color:#fca5a5;">
+              ✗ Declined<br><span style="font-weight:400; font-size:0.75rem; color:var(--muted);">Try a different group</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem; background:var(--surface); border:1px solid rgba(251,191,36,0.2); border-radius:14px; padding:1.25rem;">
+          <p style="font-size:0.84rem; color:var(--muted); line-height:1.65;">
+            <span style="color:var(--amber); font-weight:700;">💡 Why applications?</span><br>
+            Open-access groups lose quality fast. By requiring a short application, groups stay focused, members are genuinely invested, and the leader can shape the kind of community they want to build.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ADMIN BRIDGE ══════════════ -->
+<section id="admin">
+  <div class="wrap">
+    <div class="admin-layout">
+
+      <!-- Bridge diagram -->
+      <div class="reveal">
+        <div style="text-align:center; margin-bottom:2rem;">
+          <span class="t-label" style="display:inline-block">The Admin Bridge</span>
+        </div>
+
+        <div class="bridge-diagram">
+
+          <!-- External tier -->
+          <div class="bd-tier">
+            <div class="bd-node bd-ext">🏢<br>External<br>Organisations</div>
+            <div class="bd-node bd-ext">👩‍🏫<br>Teachers &amp;<br>School Staff</div>
+            <div class="bd-node bd-ext">🏫<br>Other<br>Schools</div>
+          </div>
+
+          <div class="bd-conn"><div class="bd-line"></div><div class="bd-arr"></div></div>
+
+          <!-- Admin -->
+          <div class="bd-tier">
+            <div class="bd-node bd-adm" style="max-width:100%; flex:1; font-family:'Syne',sans-serif;">
+              ⚡ Admin Team<br>
+              <span style="font-weight:400; font-size:0.72rem; color:var(--muted);">Ecosystem managers · Bridge builders</span>
+            </div>
+          </div>
+
+          <div class="bd-conn"><div class="bd-line"></div><div class="bd-arr"></div></div>
+
+          <!-- Domain tier -->
+          <div class="bd-tier">
+            <div class="bd-node bd-dom" style="position:relative;">🗣️<br><span style="font-size:0.65rem;">Social</span><br><span style="font-size:0.6rem; color:rgba(110,231,183,0.7);">Domain Leader</span></div>
+            <div class="bd-node bd-dom" style="position:relative;">🎨<br><span style="font-size:0.65rem;">Art</span><br><span style="font-size:0.6rem; color:rgba(110,231,183,0.7);">Domain Leader</span></div>
+            <div class="bd-node bd-dom" style="position:relative;">🌱<br><span style="font-size:0.65rem;">Env.</span><br><span style="font-size:0.6rem; color:rgba(110,231,183,0.7);">Domain Leader</span></div>
+            <div class="bd-node bd-dom" style="position:relative;">🍥<br><span style="font-size:0.65rem;">Anime</span><br><span style="font-size:0.6rem; color:rgba(110,231,183,0.7);">Domain Leader</span></div>
+          </div>
+
+          <!-- Bidirectional connector: Layer 2 ↔ Layer 3 -->
+          <div style="display:flex; flex-direction:column; align-items:center; padding:0.3rem 0; gap:2px;">
+            <div style="font-size:0.6rem; font-weight:700; color:var(--emerald); letter-spacing:0.08em; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2); border-radius:6px; padding:0.2rem 0.6rem;">Feedback &amp; Vision ↑ · Direction ↓</div>
+            <div style="width:2px; height:16px; background:var(--border);"></div>
+            <div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--dim);"></div>
+          </div>
+
+          <!-- Groups tier -->
+          <div class="bd-tier">
+            <div class="bd-node bd-grp">Group A<br>War</div>
+            <div class="bd-node bd-grp">Group B<br>Poverty</div>
+            <div class="bd-node bd-grp">Group C<br>Markets</div>
+            <div class="bd-node bd-grp">✨ New<br>Group</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Admin text -->
+      <div class="reveal" style="transition-delay:0.15s">
+        <span class="t-label">The Admin Team</span>
+        <h2 class="t-h2" style="margin-bottom:1rem;">Managing the ecosystem,<br>not the discussion.</h2>
+        <p class="t-body-lg" style="margin-bottom:2rem;">Admins don't tell groups what to talk about. They keep the whole platform healthy, connected, and linked to the world beyond the server. Critically, they receive structured proposals — not noise — from Domain Leaders.</p>
+
+        <!-- Layer 2 → Admin proposal flow highlight -->
+        <div style="background:linear-gradient(135deg,rgba(52,211,153,0.07),rgba(124,111,236,0.07)); border:1.5px solid rgba(52,211,153,0.22); border-radius:14px; padding:1.3rem 1.4rem; margin-bottom:1.75rem;">
+          <div style="font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--emerald); margin-bottom:0.8rem;">📤 How Domain Leaders Talk to Admins</div>
+          <div style="display:flex; flex-direction:column; gap:0.55rem;">
+            <div style="display:flex; align-items:flex-start; gap:0.7rem; font-size:0.82rem; color:var(--muted);">
+              <span style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.25); border-radius:6px; padding:0.15rem 0.5rem; color:var(--emerald); font-weight:700; flex-shrink:0; font-size:0.7rem;">1</span>
+              Domain Leader meets with all Group Leaders in their domain
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.7rem; font-size:0.82rem; color:var(--muted);">
+              <span style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.25); border-radius:6px; padding:0.15rem 0.5rem; color:var(--emerald); font-weight:700; flex-shrink:0; font-size:0.7rem;">2</span>
+              Collects member feedback, visions, and emerging needs across all groups
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.7rem; font-size:0.82rem; color:var(--muted);">
+              <span style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.25); border-radius:6px; padding:0.15rem 0.5rem; color:var(--emerald); font-weight:700; flex-shrink:0; font-size:0.7rem;">3</span>
+              If an NPO session, inter-school exchange, or external collaboration is needed — compiles a clear proposal
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.7rem; font-size:0.82rem; color:var(--muted);">
+              <span style="background:rgba(124,111,236,0.12); border:1px solid rgba(124,111,236,0.3); border-radius:6px; padding:0.15rem 0.5rem; color:var(--violet-lt); font-weight:700; flex-shrink:0; font-size:0.7rem;">→</span>
+              Submits the proposal to the Admin Team, who action it through external networks
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-cards">
+          <div class="adm-card">
+            <div class="adm-icon" style="background:rgba(56,189,248,0.1)">🌐</div>
+            <div>
+              <h4>Act on Domain Leader Proposals</h4>
+              <p>When a Domain Leader submits a vision — e.g. "our Poverty group wants to run a session with an NGO" — admins find the partner and make it happen.</p>
+            </div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-icon" style="background:rgba(52,211,153,0.1)">👩‍🏫</div>
+            <div>
+              <h4>Connection to Teachers &amp; School</h4>
+              <p>Admins serve as the formal link between student communities and school staff — sharing updates, escalating concerns, and coordinating where needed.</p>
+            </div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-icon" style="background:rgba(251,191,36,0.1)">🏫</div>
+            <div>
+              <h4>Inter-School Exchange</h4>
+              <p>When Domain Leaders request cross-school interactions, admins coordinate with other schools to set up joint discussions, debates, or collaborative projects.</p>
+            </div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-icon" style="background:rgba(124,111,236,0.12)">⚙️</div>
+            <div>
+              <h4>Platform Management</h4>
+              <p>Creating domains, onboarding Domain Leaders and Group Leaders, and keeping the server structure clean and navigable.</p>
+            </div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-icon" style="background:rgba(248,113,113,0.1)">🛡️</div>
+            <div>
+              <h4>Safety Oversight</h4>
+              <p>Admins enforce community-wide guidelines and act as the final escalation point when issues arise at the group or domain level.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FULL SYSTEM MAP ══════════════ -->
+<section id="system">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="t-label">At a Glance</span>
+      <h2 class="t-h2">How the Whole System Connects.</h2>
+      <p class="t-body-lg">From a student joining for the first time to a full member in a discussion group — here's the complete picture.</p>
+    </div>
+
+    <div class="system-map reveal" style="transition-delay:0.1s">
+
+      <!-- External layer -->
+      <div class="sm-section-label">External World</div>
+      <div class="sm-row" style="margin-bottom:0.75rem;">
+        <div class="sm-node" style="background:rgba(56,189,248,0.07); border-color:rgba(56,189,248,0.22);">
+          <div class="sm-icon">🏢</div>
+          <div class="sm-name" style="color:#7dd3fc;">External Organisations</div>
+        </div>
+        <div class="sm-arrow">↔</div>
+        <div class="sm-node" style="background:rgba(52,211,153,0.07); border-color:rgba(52,211,153,0.22);">
+          <div class="sm-icon">👩‍🏫</div>
+          <div class="sm-name" style="color:#6ee7b7;">Teachers &amp; Staff</div>
+        </div>
+        <div class="sm-arrow">↔</div>
+        <div class="sm-node" style="background:rgba(56,189,248,0.07); border-color:rgba(56,189,248,0.22);">
+          <div class="sm-icon">🏫</div>
+          <div class="sm-name" style="color:#7dd3fc;">Other Schools</div>
+        </div>
+      </div>
+
+      <div class="sm-divider"><div class="sm-divider-line"></div><div class="sm-divider-dot"></div><div class="sm-divider-line"></div></div>
+
+      <!-- Admin layer -->
+      <div class="sm-section-label">Admin Team</div>
+      <div class="sm-row" style="margin-bottom:0.75rem;">
+        <div class="sm-node" style="background:rgba(124,111,236,0.1); border-color:rgba(124,111,236,0.35); flex:1; max-width:100%;">
+          <div class="sm-icon">⚡</div>
+          <div class="sm-name" style="color:var(--violet-lt);">Admin Team — Ecosystem Managers</div>
+          <div class="sm-sub">Bridge between external world and student communities</div>
+        </div>
+      </div>
+
+      <div class="sm-divider"><div class="sm-divider-line"></div><div class="sm-divider-dot"></div><div class="sm-divider-line"></div></div>
+
+      <!-- Platform layer -->
+      <div class="sm-section-label">The Platform</div>
+      <div class="sm-row" style="margin-bottom:0.75rem;">
+        <div class="sm-node" style="background:rgba(124,111,236,0.07); border-color:rgba(124,111,236,0.22); flex:1; max-width:100%;">
+          <div class="sm-icon">🌐</div>
+          <div class="sm-name" style="color:var(--violet-lt);">Nexus — Sandringham College</div>
+          <div class="sm-sub">All Sandringham students · Shared Discord server</div>
+        </div>
+      </div>
+
+      <div class="sm-divider"><div class="sm-divider-line"></div><div class="sm-divider-dot"></div><div class="sm-divider-line"></div></div>
+
+      <!-- Domains layer -->
+      <div class="sm-section-label">Interest Domains (Layer 2)</div>
+      <div class="sm-row" style="margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+        <div class="sm-node" style="background:rgba(52,211,153,0.06); border-color:rgba(52,211,153,0.2); min-width:100px;">
+          <div class="sm-icon" style="font-size:1.1rem">🗣️</div>
+          <div class="sm-name" style="color:#6ee7b7; font-size:0.75rem;">Social Discussion</div>
+        </div>
+        <div class="sm-node" style="background:rgba(52,211,153,0.06); border-color:rgba(52,211,153,0.2); min-width:100px;">
+          <div class="sm-icon" style="font-size:1.1rem">🎨</div>
+          <div class="sm-name" style="color:#6ee7b7; font-size:0.75rem;">Art</div>
+        </div>
+        <div class="sm-node" style="background:rgba(52,211,153,0.06); border-color:rgba(52,211,153,0.2); min-width:100px;">
+          <div class="sm-icon" style="font-size:1.1rem">🌱</div>
+          <div class="sm-name" style="color:#6ee7b7; font-size:0.75rem;">Environment</div>
+        </div>
+        <div class="sm-node" style="background:rgba(52,211,153,0.06); border-color:rgba(52,211,153,0.2); min-width:100px;">
+          <div class="sm-icon" style="font-size:1.1rem">🍥</div>
+          <div class="sm-name" style="color:#6ee7b7; font-size:0.75rem;">Anime & Media</div>
+        </div>
+        <div class="sm-node" style="background:rgba(52,211,153,0.06); border-color:rgba(52,211,153,0.2); min-width:100px;">
+          <div class="sm-icon" style="font-size:1.1rem">⚽</div>
+          <div class="sm-name" style="color:#6ee7b7; font-size:0.75rem;">Sports</div>
+        </div>
+        <div class="sm-node" style="background:rgba(52,211,153,0.06); border-color:rgba(52,211,153,0.2); min-width:100px; color:var(--dim);">
+          <div class="sm-icon" style="font-size:1rem">+6</div>
+          <div class="sm-name" style="color:var(--muted); font-size:0.72rem;">More domains</div>
+        </div>
+      </div>
+
+      <div class="sm-divider"><div class="sm-divider-line"></div><div class="sm-divider-dot"></div><div class="sm-divider-line"></div></div>
+
+      <!-- Groups layer -->
+      <div class="sm-section-label">Discussion Groups (Layer 3) · Student-led · Application-based</div>
+      <div class="sm-row" style="flex-wrap:wrap; gap:0.5rem;">
+        <div class="sm-node" style="background:rgba(251,191,36,0.05); border-color:rgba(251,191,36,0.18); min-width:120px;">
+          <div class="sm-icon" style="font-size:1rem">👑</div>
+          <div class="sm-name" style="color:#fcd34d; font-size:0.75rem;">Group A — Politics</div>
+          <div class="sm-sub" style="font-size:0.65rem;">Leader + members</div>
+        </div>
+        <div class="sm-node" style="background:rgba(251,191,36,0.05); border-color:rgba(251,191,36,0.18); min-width:120px;">
+          <div class="sm-icon" style="font-size:1rem">👑</div>
+          <div class="sm-name" style="color:#fcd34d; font-size:0.75rem;">Group B — Global</div>
+          <div class="sm-sub" style="font-size:0.65rem;">Leader + members</div>
+        </div>
+        <div class="sm-node" style="background:rgba(251,191,36,0.05); border-color:rgba(251,191,36,0.18); min-width:120px;">
+          <div class="sm-icon" style="font-size:1rem">👑</div>
+          <div class="sm-name" style="color:#fcd34d; font-size:0.75rem;">Group C — Philosophy</div>
+          <div class="sm-sub" style="font-size:0.65rem;">Leader + members</div>
+        </div>
+        <div class="sm-node" style="background:rgba(251,191,36,0.05); border-color:rgba(251,191,36,0.18); min-width:120px;">
+          <div class="sm-icon" style="font-size:1rem">+</div>
+          <div class="sm-name" style="color:var(--muted); font-size:0.72rem;">More groups across all domains</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ JOIN ══════════════ -->
+<section id="join">
+  <div class="wrap">
+    <div class="join-wrap">
+
+      <div class="reveal">
+        <span class="t-label">Get Involved</span>
+        <h2 class="t-h2" style="margin-bottom:1rem;">Ready to find your community?</h2>
+        <p class="t-body-lg">Whether you're into politics, philosophy, anime, running, or startups — there's a group here for you. Express your interest and we'll send you an invite.</p>
+
+        <a href="#" class="join-discord-block" style="text-decoration:none; display:flex;">
+          <div class="jdb-icon">💬</div>
+          <div class="jdb-text">
+            <h4>Join directly on Discord</h4>
+            <p>Already know you want in? Click to go straight to the server.</p>
+          </div>
+          <div style="margin-left:auto; display:flex; align-items:center;">
+            <div class="btn btn-primary" style="white-space:nowrap; flex-shrink:0; background:#5865f2; box-shadow:0 0 24px rgba(88,101,242,0.35);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.033.056a19.91 19.91 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+              Open Discord
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="join-form reveal" style="transition-delay:0.15s">
+        <div class="jf-title">Express Interest 👋</div>
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" placeholder="e.g. Jordan Smith">
+        </div>
+        <div class="field">
+          <label>Year Level</label>
+          <select>
+            <option value="" disabled selected>Select your year</option>
+            <option>Year 9</option>
+            <option>Year 10</option>
+            <option>Year 11</option>
+            <option>Year 12</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Interested Domains (select any)</label>
+          <div class="chips">
+            <button class="chip" onclick="this.classList.toggle('on')">🗣️ Social</button>
+            <button class="chip" onclick="this.classList.toggle('on')">🎨 Art</button>
+            <button class="chip" onclick="this.classList.toggle('on')">🌱 Environment</button>
+            <button class="chip" onclick="this.classList.toggle('on')">🍥 Anime</button>
+            <button class="chip" onclick="this.classList.toggle('on')">⚽ Sports</button>
+            <button class="chip" onclick="this.classList.toggle('on')">🚀 Startups</button>
+            <button class="chip" onclick="this.classList.toggle('on')">📚 Books</button>
+            <button class="chip" onclick="this.classList.toggle('on')">🎲 Board Games</button>
+            <button class="chip" onclick="this.classList.toggle('on')">🏔️ Outdoors</button>
+            <button class="chip" onclick="this.classList.toggle('on')">🏃 Running</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Why do you want to join? (optional)</label>
+          <textarea rows="2" placeholder="Tell us what you're hoping to explore in Nexus..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="handleJoin()">Submit Expression of Interest →</button>
+        <p style="font-size:0.73rem; color:var(--dim); text-align:center; margin-top:0.75rem;">We'll send your Discord invite to your school email shortly.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div>
+        <div class="foot-brand">Nexus.</div>
+        <div class="foot-school">Sandringham College · Student Community Platform</div>
+      </div>
+      <div class="foot-links">
+        <a href="#core">About</a>
+        <a href="#layers">Structure</a>
+        <a href="#entry">How to Join</a>
+        <a href="#admin">Admin</a>
+        <a href="#join">Get Involved</a>
+      </div>
+      <div class="foot-copy">© 2025 Nexus. A prototype platform.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Scroll reveal ──────────────────── */
+const items = document.querySelectorAll('.reveal, .ef-step');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 65);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+items.forEach(el => io.observe(el));
+
+/* Stagger ef-steps by index */
+document.querySelectorAll('.ef-step').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.07}s`;
+});
+
+/* ── Nav scroll ─────────────────────── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('nav');
+  nav.style.background = window.scrollY > 40
+    ? 'rgba(9,9,14,0.95)'
+    : 'rgba(9,9,14,0.75)';
+});
+
+/* ── Domain tab switcher ────────────── */
+const domainData = {
+  social: [
+    { label:'Group · War',             name:'Armed Conflicts & Wars',      desc:'Causes, history, and consequences of modern conflicts worldwide' },
+    { label:'Group · Market',          name:'Markets & Economics',          desc:'Capitalism, global trade, financial systems and inequality' },
+    { label:'Group · Digital',         name:'Digital Platforms & Society',  desc:'Big tech, social media power, algorithmic influence' },
+    { label:'Group · Poverty',         name:'Poverty & Inequality',         desc:'Structural causes, policy solutions, global aid debates' },
+    { label:'Group · Democracy',       name:'Democracy & Elections',        desc:'Voting systems, populism, political participation' },
+    { label:'Group · Human Rights',    name:'Human Rights',                 desc:'Civil liberties, global frameworks, current violations' },
+    { label:'✨ New',                   name:'Propose Your Own Group',       desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
+  ],
+  env: [
+    { label:'Group · Climate',         name:'Climate Change & Policy',      desc:'Science, activism, international agreements and net zero' },
+    { label:'Group · Biodiversity',    name:'Biodiversity Loss',            desc:'Ecosystems at risk, species extinction, conservation' },
+    { label:'Group · Energy',          name:'Renewable Energy',             desc:'Solar, wind, nuclear — the debate around the energy transition' },
+    { label:'Group · Plastic',         name:'Ocean & Plastic Pollution',    desc:'Marine ecosystems, corporate responsibility, zero-waste living' },
+    { label:'✨ New',                   name:'Propose Your Own Group',       desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
+  ],
+  startups: [
+    { label:'Group · Ideas',           name:'Startup Pitching',             desc:'Share ideas, give feedback, iterate on concepts as a group' },
+    { label:'Group · Tech',            name:'Tech & Innovation Trends',     desc:'AI, Web3, biotech — what\'s coming and what it means' },
+    { label:'Group · Social Ent.',     name:'Social Entrepreneurship',      desc:'Ventures that solve social problems — purpose-driven business' },
+    { label:'Group · VC',              name:'Venture Capital & Funding',    desc:'How startups raise money, pitch decks, investor mindsets' },
+    { label:'✨ New',                   name:'Propose Your Own Group',       desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
+  ],
+  art: [
+    { label:'Group · Visual',          name:'Visual Arts & Illustration',   desc:'Drawing, painting, digital art, critiques and portfolios' },
+    { label:'Group · Photography',     name:'Photography',                  desc:'Composition, editing, photo walks and documentary work' },
+    { label:'Group · Film',            name:'Film & Video',                 desc:'Cinematography, short film production, film analysis' },
+    { label:'Group · Design',          name:'Graphic Design & Branding',    desc:'Typography, visual identity, UI/UX aesthetics' },
+    { label:'✨ New',                   name:'Propose Your Own Group',       desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
+  ],
+};
+
+function switchDomain(key) {
+  // update tab buttons
+  document.querySelectorAll('.domain-tab-btn').forEach(btn => {
+    const isActive = btn.getAttribute('onclick').includes(`'${key}'`);
+    btn.style.background = isActive ? 'rgba(251,191,36,0.12)' : 'transparent';
+    btn.style.borderColor = isActive ? 'rgba(251,191,36,0.35)' : 'rgba(255,255,255,0.07)';
+    btn.style.color = isActive ? '#fcd34d' : '#888899';
+  });
+
+  const groups = domainData[key] || [];
+  const container = document.getElementById('groups-display');
+  container.innerHTML = groups.map(g => `
+    <div class="gp-card" style="${g.isNew ? 'border-style:dashed; border-color:rgba(124,111,236,0.3); background:rgba(124,111,236,0.04);' : ''}">
+      <div class="gp-label" style="${g.isNew ? 'color:var(--violet-lt)' : ''}">${g.label}</div>
+      <div class="gp-name" style="${g.isNew ? 'color:var(--violet-lt)' : ''}">${g.name}</div>
+      <div class="gp-desc">${g.desc}</div>
+    </div>
+  `).join('');
+}
+
+// init
+switchDomain('social');
+function handleJoin() {
+  const selected = [...document.querySelectorAll('.chip.on')].map(c => c.textContent.trim());
+  if (!selected.length) { alert('Pick at least one domain to continue! 👆'); return; }
+  alert(`You're in! 🎉\n\nDomains selected: ${selected.join(', ')}\n\nYour Discord invite will be sent to your school email shortly. See you in Nexus!`);
+}
+</script>
+</body>
+</html>
