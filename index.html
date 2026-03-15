@@ -126,31 +126,185 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 2.5rem;height:64px
 .cv p{font-size:.78rem;color:var(--dim);line-height:1.5;}
 
 /* ════════════════════════════════════
-   SECTION — 3-LAYER STRUCTURE
+   SECTION — 3-LAYER STRUCTURE (tree diagram)
 ════════════════════════════════════ */
 #layers{background:var(--bg3);}
-.layer-diagram{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:0;}
+
+/* ── Layer stack (top 3 blocks) ── */
+.layer-stack{max-width:820px;margin:0 auto;display:flex;flex-direction:column;}
 .layer-block{border-radius:18px;padding:2rem 2.25rem;border:1.5px solid;position:relative;transition:all .3s;}
-.layer-block:hover{transform:scale(1.01);}
-.layer-block+.layer-block{margin-top:1.25rem;}
-.layer-connector{display:flex;align-items:center;justify-content:center;height:36px;position:relative;}
+.layer-block:hover{transform:scale(1.008);}
+.layer-block+.layer-block{margin-top:1.15rem;}
+.layer-connector{display:flex;align-items:center;justify-content:center;height:34px;position:relative;}
 .layer-connector::before{content:'';position:absolute;left:50%;transform:translateX(-50%);width:2px;height:100%;background:var(--border);}
 .layer-connector-arrow{background:var(--surface2);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.75rem;position:relative;z-index:1;color:var(--muted);}
 .layer-1{background:linear-gradient(135deg,rgba(124,111,236,.12),rgba(124,111,236,.04));border-color:rgba(124,111,236,.35);}
 .layer-2{background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(52,211,153,.03));border-color:rgba(52,211,153,.3);}
-.layer-3{background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(251,191,36,.03));border-color:rgba(251,191,36,.3);}
 .layer-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.25rem .75rem;border-radius:100px;margin-bottom:.75rem;}
-.layer-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.02em;}
-.layer-desc{font-size:.88rem;color:var(--muted);max-width:520px;}
-.domain-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem;}
-.domain-pill{display:flex;align-items:center;gap:.4rem;padding:.38rem .9rem;border-radius:100px;font-size:.78rem;font-weight:600;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:#6ee7b7;transition:all .2s;}
-.domain-pill:hover{background:rgba(52,211,153,.14);transform:translateY(-2px);}
-.groups-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.85rem;margin-top:0;}
+.layer-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.02em;}
+.layer-desc{font-size:.87rem;color:var(--muted);max-width:540px;}
+
+/* ── TREE DIAGRAM ── */
+.tree-section{margin-top:1.5rem;}
+
+.tree-intro{
+  text-align:center;
+  margin-bottom:2rem;
+}
+.tree-intro h3{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:1.05rem;color:var(--text);margin-bottom:.4rem;
+}
+.tree-intro p{font-size:.85rem;color:var(--muted);}
+
+/* Outer wrapper for the whole tree */
+.tree-wrap{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:2.5rem 2rem;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Subtle radial glow behind diagram */
+.tree-wrap::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  width:400px;height:250px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(52,211,153,.06),transparent 70%);
+  pointer-events:none;
+}
+
+/* Platform root node */
+.tree-root{
+  display:flex;justify-content:center;
+  margin-bottom:0;
+  position:relative;z-index:2;
+}
+
+.tree-root-node{
+  background:linear-gradient(135deg,rgba(124,111,236,.18),rgba(124,111,236,.08));
+  border:1.5px solid rgba(124,111,236,.4);
+  border-radius:14px;
+  padding:1rem 2rem;
+  text-align:center;
+  display:inline-flex;flex-direction:column;align-items:center;
+  gap:.3rem;
+  box-shadow:0 0 30px rgba(124,111,236,.12);
+}
+.tree-root-icon{font-size:1.5rem;}
+.tree-root-label{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:#c4bbff;}
+.tree-root-sub{font-size:.7rem;color:var(--muted);}
+
+/* SVG connector area */
+.tree-svg{display:block;width:100%;overflow:visible;margin:0;}
+
+/* Domain row */
+.tree-domains{
+  display:flex;
+  justify-content:center;
+  gap:.65rem;
+  flex-wrap:nowrap;
+  position:relative;
+  z-index:2;
+  margin-bottom:0;
+}
+
+.domain-node{
+  display:flex;flex-direction:column;align-items:center;
+  gap:.4rem;
+  cursor:pointer;
+  flex:1;
+  min-width:0;
+  max-width:90px;
+  transition:transform .2s;
+}
+.domain-node:hover{transform:translateY(-3px);}
+
+.domain-box{
+  width:100%;
+  padding:.7rem .4rem;
+  background:rgba(52,211,153,.07);
+  border:1.5px solid rgba(52,211,153,.22);
+  border-radius:10px;
+  text-align:center;
+  transition:all .2s;
+  position:relative;
+}
+.domain-node.active .domain-box{
+  background:rgba(52,211,153,.15);
+  border-color:rgba(52,211,153,.5);
+  box-shadow:0 0 20px rgba(52,211,153,.15);
+}
+.domain-node:hover .domain-box{
+  background:rgba(52,211,153,.12);
+  border-color:rgba(52,211,153,.4);
+}
+.domain-emoji{font-size:1.1rem;display:block;margin-bottom:.2rem;}
+.domain-name{font-size:.62rem;font-weight:700;color:#6ee7b7;line-height:1.3;display:block;}
+
+.domain-node.active .domain-name{color:#34d399;}
+
+/* Active dot on domain */
+.domain-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--emerald);
+  box-shadow:0 0 8px var(--emerald);
+  opacity:0;transition:opacity .2s;
+  flex-shrink:0;
+}
+.domain-node.active .domain-dot{opacity:1;}
+
+/* Groups panel */
+.groups-panel{
+  background:linear-gradient(135deg,rgba(251,191,36,.06),rgba(251,191,36,.02));
+  border:1.5px solid rgba(251,191,36,.2);
+  border-radius:16px;
+  padding:1.5rem;
+  position:relative;z-index:2;
+  margin-top:0;
+  transition:opacity .3s;
+}
+.groups-panel-header{
+  display:flex;align-items:center;gap:.75rem;
+  margin-bottom:1.1rem;
+  padding-bottom:.9rem;
+  border-bottom:1px solid rgba(251,191,36,.12);
+}
+.gph-icon{font-size:1.5rem;}
+.gph-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);}
+.gph-sub{font-size:.78rem;color:var(--muted);margin-top:.1rem;}
+.gph-tag{
+  margin-left:auto;
+  font-size:.65rem;font-weight:700;
+  padding:.2rem .65rem;border-radius:100px;
+  background:rgba(52,211,153,.1);
+  border:1px solid rgba(52,211,153,.22);
+  color:var(--emerald);
+  white-space:nowrap;
+}
+
+.groups-grid-tree{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
+  gap:.75rem;
+}
+
 .gp-card{background:rgba(255,255,255,.03);border:1px solid rgba(251,191,36,.15);border-radius:10px;padding:.9rem 1rem;transition:all .22s;}
 .gp-card:hover{border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.05);transform:translateY(-3px);}
 .gp-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.3rem;}
 .gp-name{font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.2rem;}
 .gp-desc{font-size:.76rem;color:var(--muted);line-height:1.45;}
+
+/* domain-pills (kept for other uses) */
+.domain-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem;}
+.domain-pill{display:flex;align-items:center;gap:.4rem;padding:.38rem .9rem;border-radius:100px;font-size:.78rem;font-weight:600;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:#6ee7b7;transition:all .2s;}
+.domain-pill:hover{background:rgba(52,211,153,.14);transform:translateY(-2px);}
+
+/* groups-preview (old, kept for compat) */
+.groups-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.85rem;margin-top:0;}
 
 /* ════════════════════════════════════
    SECTION — ENTRY FLOW
@@ -475,24 +629,160 @@ footer{background:var(--bg3);border-top:1px solid var(--border);padding:3rem 0;}
 .foot-copy{font-size:.75rem;color:var(--dim);}
 
 /* ════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — tablet & mobile
 ════════════════════════════════════ */
+
+/* ── Tablet (≤920px) ── */
 @media(max-width:920px){
   .hero-aside,.nav-links{display:none;}
-  .core-grid,.groups-layout,.admin-layout,.offline-layout,.join-wrap,.teacher-panels{grid-template-columns:1fr;gap:3rem;}
+
+  /* padding scale down */
+  section{padding:4.5rem 0;}
+  .wrap{padding:0 1.25rem;}
+  .sec-head{margin-bottom:2.5rem;}
+
+  /* grids → single column */
+  .core-grid,.groups-layout,.admin-layout,
+  .offline-layout,.join-wrap,.teacher-panels{
+    grid-template-columns:1fr;gap:2.5rem;
+  }
   .core-values{grid-template-columns:1fr 1fr;}
   .groups-preview{grid-template-columns:1fr 1fr;}
   .safety-principles{grid-template-columns:1fr 1fr;}
-  .sm-row{justify-content:center;}
-  .sm-arrow{display:none;}
-  .foot-inner{flex-direction:column;text-align:center;}
-  .foot-links{justify-content:center;}
-}
-@media(max-width:600px){
-  .core-values,.groups-preview,.af-outcome,.safety-principles{grid-template-columns:1fr;}
   .gl-grid{grid-template-columns:1fr;}
-  .bd-tier{flex-wrap:wrap;justify-content:center;}
-  .sm-row{flex-direction:column;align-items:center;}
+
+  /* system map */
+  .sm-row{justify-content:center;flex-wrap:wrap;gap:.4rem;}
+  .sm-arrow{display:none;}
+  .sm-node{min-width:80px;max-width:120px;}
+
+  /* footer */
+  .foot-inner{flex-direction:column;text-align:center;}
+  .foot-links{justify-content:center;flex-wrap:wrap;gap:1rem;}
+
+  /* tree diagram: allow horizontal scroll */
+  .tree-domains{overflow-x:auto;padding-bottom:.5rem;justify-content:flex-start;flex-wrap:nowrap;}
+  .domain-node{min-width:72px;}
+
+  /* nav join button */
+  nav .btn-primary{font-size:.75rem;padding:.45rem .9rem;}
+}
+
+/* ── Mobile (≤600px) ── */
+@media(max-width:600px){
+  /* base */
+  section{padding:3.5rem 0;}
+  .wrap{padding:0 1rem;}
+  .sec-head{margin-bottom:2rem;}
+
+  /* typography */
+  .t-display{font-size:clamp(2.4rem,12vw,3.5rem);line-height:1.0;}
+  .t-h2{font-size:clamp(1.55rem,7vw,2rem);}
+  .hero-school{font-size:clamp(1rem,5vw,1.4rem);}
+  .hero-sub{font-size:.97rem;margin:1.2rem 0 1.8rem;}
+  .hero-btns{flex-direction:column;gap:.65rem;}
+  .hero-btns .btn{width:100%;justify-content:center;}
+  .hero-tagline{margin-top:2rem;font-size:.72rem;}
+
+  /* hero */
+  #hero{padding-top:62px;min-height:auto;padding-bottom:4rem;}
+
+  /* all 2-col grids → 1 col */
+  .core-values,.groups-preview,.af-outcome,
+  .safety-principles,.gl-grid,.outcome-row{
+    grid-template-columns:1fr;
+  }
+  .teacher-panels{grid-template-columns:1fr;gap:1.25rem;}
+
+  /* admin bridge */
+  .bd-tier{flex-wrap:wrap;justify-content:center;gap:.4rem;}
+  .bd-node{max-width:none;flex:0 0 calc(50% - .2rem);}
+  .bd-adm{flex:0 0 100%;}
+
+  /* cards — reduce padding */
+  .cp,.resp-item,.adm-card,.ap,.ofs,.gl-item{padding:.75rem .85rem;}
+  .join-form{padding:1.5rem 1.1rem;}
+  .apply-flow,.group-leader-card,.offline-flow,.offline-support,
+  .safety-banner,.no-burden{padding:1.25rem 1rem;}
+  .tree-wrap{padding:1.5rem .85rem;}
+  .system-map{padding:1.5rem 1rem;}
+
+  /* layer diagram */
+  .layer-block{padding:1.35rem 1.1rem;}
+  .layer-title{font-size:1rem;}
+  .layer-desc{font-size:.83rem;}
+  .domain-pills{gap:.35rem;}
+  .domain-pill{font-size:.72rem;padding:.28rem .7rem;}
+  .gp-grid{grid-template-columns:1fr 1fr;}
+
+  /* tree */
+  .tree-root-node{padding:.75rem 1.25rem;}
+  .tree-root-label{font-size:.85rem;}
+  .domain-node{min-width:64px;max-width:64px;}
+  .domain-emoji{font-size:.95rem;}
+  .domain-name{font-size:.56rem;}
+  .groups-grid-tree{grid-template-columns:1fr;}
+  .gp-card{padding:.75rem .85rem;}
+
+  /* entry flow */
+  .ef-card{padding:.95rem 1rem;}
+  .ef-card h4{font-size:.92rem;}
+  .ef-card p{font-size:.8rem;}
+  .ef-num{width:36px;height:36px;font-size:.78rem;}
+
+  /* offline */
+  .loc-chips{gap:.3rem;}
+  .loc-chip{font-size:.72rem;padding:.25rem .65rem;}
+  .ofs h5{font-size:.83rem;}
+  .ofs p{font-size:.74rem;}
+  .offline-support{flex-direction:column;gap:.65rem;}
+  .sn-icon{font-size:1.3rem;}
+
+  /* safety */
+  .safety-principles{grid-template-columns:1fr;}
+  .sb-header{flex-direction:column;gap:.85rem;}
+  .sb-shield{width:44px;height:44px;font-size:1.3rem;}
+  .sb-head h3{font-size:1.05rem;}
+  .sb-head p{font-size:.84rem;}
+  .sp{padding:.95rem;}
+  .gl-grid{padding:1rem;}
+  .au-gov-note{flex-direction:column;gap:.5rem;}
+
+  /* teacher panels */
+  .t-panel{padding:1.5rem 1.1rem;}
+  .t-panel h3{font-size:.97rem;}
+  .t-panel p{font-size:.82rem;margin-bottom:.65rem;}
+  .t-panel ul li{font-size:.79rem;}
+  .t-panel-num{font-size:2.2rem;top:.8rem;right:.9rem;}
+  .no-burden{flex-direction:column;gap:.65rem;}
+  .nb-icon{font-size:1.4rem;}
+  .nb-body h4{font-size:.9rem;}
+  .nb-body p{font-size:.82rem;}
+
+  /* admin section */
+  .adm-card h4{font-size:.86rem;}
+  .adm-card p{font-size:.78rem;}
+
+  /* join */
+  .join-discord-block{flex-wrap:wrap;gap:.75rem;}
+  .jdb-icon{font-size:1.6rem;}
+  .jdb-text h4{font-size:.88rem;}
+  .join-discord-block .btn-primary{width:100%;justify-content:center;}
+
+  /* system map */
+  .sm-node{min-width:70px;padding:.7rem .4rem;}
+  .sm-name{font-size:.72rem;}
+  .sm-sub{font-size:.6rem;}
+  .sm-section-label{font-size:.58rem;}
+
+  /* footer */
+  .foot-inner{gap:1rem;}
+  .foot-links{gap:.75rem;}
+  .foot-links a{font-size:.78rem;}
+
+  /* nav */
+  nav{padding:0 1rem;}
+  .nav-logo-name{font-size:1.05rem;}
 }
 </style>
 </head>
@@ -502,7 +792,6 @@ footer{background:var(--bg3);border-top:1px solid var(--border);padding:3rem 0;}
 <nav id="nav">
   <div class="nav-logo">
     <span class="nav-logo-name">Nexus</span>
-    <span class="nav-logo-school">Sandringham College</span>
   </div>
   <div class="nav-links">
     <a href="#core">About</a>
@@ -522,9 +811,8 @@ footer{background:var(--bg3);border-top:1px solid var(--border);padding:3rem 0;}
   <div class="hero-mesh"></div>
   <div class="wrap" style="position:relative;z-index:2;">
     <div class="hero-inner">
-      <div class="hero-pill"><span class="hero-pill-dot"></span>Student Community Platform · Sandringham College</div>
       <h1 class="t-display hero-title">Nexus<span class="hero-school">Sandringham College</span></h1>
-      <p class="hero-sub">A student-driven digital community where ideas connect.<br>Explore your interests, join discussion groups, and collaborate with people who actually think like you.</p>
+      <p class="hero-sub">A student-driven digital community where ideas connect. Explore your interests, join discussion groups, and collaborate with people who actually think like you.</p>
       <div class="hero-btns">
         <a href="#layers" class="btn btn-primary">Explore the Platform →</a>
         <a href="#join" class="btn btn-ghost">Join the Community</a>
@@ -590,62 +878,142 @@ footer{background:var(--bg3);border-top:1px solid var(--border);padding:3rem 0;}
     <div class="sec-head center reveal">
       <span class="t-label">Community Structure</span>
       <h2 class="t-h2">Three Layers. One Platform.</h2>
-      <p class="t-body-lg">Nexus is organised into three clear layers — from the whole school community down to focused discussion groups.</p>
+      <p class="t-body-lg">Each domain branches into multiple focused groups. Click any domain below to see its groups.</p>
     </div>
-    <div class="layer-diagram reveal" style="transition-delay:.1s">
+
+    <!-- Top two blocks: Layer 1 + Layer 2 summary -->
+    <div class="layer-stack reveal" style="transition-delay:.05s; max-width:820px; margin:0 auto;">
       <div class="layer-block layer-1">
         <div class="layer-tag" style="background:rgba(124,111,236,.12);border:1px solid rgba(124,111,236,.3);color:var(--violet-lt);">Layer 1 · The Platform</div>
         <div class="layer-title">⚡ Nexus — Sandringham College</div>
-        <p class="layer-desc">The overarching community for all Sandringham College students. One shared Discord server that everyone enters first.</p>
+        <p class="layer-desc">The overarching community for all Sandringham College students. One shared Discord server — the home base for everything below.</p>
       </div>
       <div class="layer-connector"><div class="layer-connector-arrow">↓</div></div>
-      <div class="layer-block layer-2">
+      <div class="layer-block" style="background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(52,211,153,.03));border-color:rgba(52,211,153,.3);">
         <div class="layer-tag" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:#6ee7b7;">Layer 2 · Interest Domains</div>
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
-          <div style="flex:1;min-width:260px;">
+        <div style="display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap;justify-content:space-between;">
+          <div style="flex:1;min-width:240px;">
             <div class="layer-title">🗂️ 11 Interest Areas — Each with a Domain Leader</div>
-            <p class="layer-desc">Each domain has a <strong style="color:var(--emerald)">Domain Leader</strong> — a student who oversees all groups within that area, collects member feedback, and submits proposals to the Admin Team when external collaboration is needed.</p>
-            <div class="domain-pills" style="margin-top:1rem;">
-              <span class="domain-pill">🎨 Art</span><span class="domain-pill">🗣️ Social Discussion</span><span class="domain-pill">🌱 Environment & Activism</span><span class="domain-pill">🍥 Anime & Media</span><span class="domain-pill">⚽ Sports</span><span class="domain-pill">🚀 Startups</span><span class="domain-pill">🎲 Board Games</span><span class="domain-pill">🃏 Card Games</span><span class="domain-pill">📚 Book Reading</span><span class="domain-pill">🏔️ Outdoor Activities</span><span class="domain-pill">🏃 Running</span>
+            <p class="layer-desc">Each domain has a <strong style="color:var(--emerald)">Domain Leader</strong> who oversees all groups within that area and submits external collaboration proposals to the Admin Team.</p>
+          </div>
+          <div style="min-width:210px;max-width:270px;background:rgba(52,211,153,.06);border:1.5px solid rgba(52,211,153,.22);border-radius:12px;padding:1.1rem;">
+            <div style="font-size:1.3rem;margin-bottom:.5rem;">🏅</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;color:#6ee7b7;margin-bottom:.45rem;">Domain Leader Role</div>
+            <div style="display:flex;flex-direction:column;gap:.42rem;">
+              <div style="display:flex;gap:.45rem;align-items:flex-start;font-size:.77rem;color:var(--muted);"><span style="color:var(--emerald);flex-shrink:0;">↔</span><span>Meets regularly with all Group Leaders inside the domain</span></div>
+              <div style="display:flex;gap:.45rem;align-items:flex-start;font-size:.77rem;color:var(--muted);"><span style="color:var(--emerald);flex-shrink:0;">📋</span><span>Collects feedback and visions from groups</span></div>
+              <div style="display:flex;gap:.45rem;align-items:flex-start;font-size:.77rem;color:var(--muted);"><span style="color:var(--emerald);flex-shrink:0;">📤</span><span>Compiles & submits proposals to Admin Team</span></div>
             </div>
-          </div>
-          <div style="min-width:230px;max-width:290px;background:rgba(52,211,153,.06);border:1.5px solid rgba(52,211,153,.22);border-radius:14px;padding:1.25rem;">
-            <div style="font-size:1.4rem;margin-bottom:.6rem;">🏅</div>
-            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;color:#6ee7b7;margin-bottom:.5rem;">Domain Leader Role</div>
-            <div style="display:flex;flex-direction:column;gap:.5rem;">
-              <div style="display:flex;gap:.5rem;align-items:flex-start;font-size:.79rem;color:var(--muted);"><span style="color:var(--emerald);flex-shrink:0;">↔</span><span>Meets regularly with all Group Leaders inside the domain</span></div>
-              <div style="display:flex;gap:.5rem;align-items:flex-start;font-size:.79rem;color:var(--muted);"><span style="color:var(--emerald);flex-shrink:0;">📋</span><span>Collects member feedback, visions, and requests from Layer 3</span></div>
-              <div style="display:flex;gap:.5rem;align-items:flex-start;font-size:.79rem;color:var(--muted);"><span style="color:var(--emerald);flex-shrink:0;">📤</span><span>If NPO sessions or inter-school exchanges are needed, compiles a proposal and submits to Admin</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="layer-connector"><div class="layer-connector-arrow">↓</div></div>
-      <div class="layer-block layer-3">
-        <div class="layer-tag" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);color:#fcd34d;">Layer 3 · Discussion Groups</div>
-        <div class="layer-title">💬 Topic-Specific Groups — The Real Conversations Happen Here</div>
-        <p class="layer-desc" style="margin-bottom:1.25rem;">Inside each domain, groups are <strong style="color:var(--amber)">focused on a single specific topic</strong>. Not "Social Discussion" in general — but <em>War</em>, or <em>Poverty</em>, or <em>Digital Platforms</em>.</p>
-        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem;" id="domain-tabs">
-          <button class="domain-tab-btn active" onclick="switchDomain('social')" style="padding:.35rem .9rem;border-radius:100px;border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.12);color:#fcd34d;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;">🗣️ Social Discussion</button>
-          <button class="domain-tab-btn" onclick="switchDomain('env')" style="padding:.35rem .9rem;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.78rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;">🌱 Environment</button>
-          <button class="domain-tab-btn" onclick="switchDomain('startups')" style="padding:.35rem .9rem;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.78rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;">🚀 Startups</button>
-          <button class="domain-tab-btn" onclick="switchDomain('art')" style="padding:.35rem .9rem;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.78rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;">🎨 Art</button>
-        </div>
-        <div id="groups-display" class="groups-preview" style="grid-template-columns:repeat(4,1fr);"></div>
-        <div style="margin-top:1.5rem;background:linear-gradient(135deg,rgba(124,111,236,.1),rgba(52,211,153,.06));border:1.5px dashed rgba(124,111,236,.35);border-radius:14px;padding:1.4rem 1.5rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">
-          <div style="font-size:2rem;">✨</div>
-          <div style="flex:1;min-width:200px;">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text);margin-bottom:.3rem;">Can't find your group? Create it yourself.</div>
-            <p style="font-size:.84rem;color:var(--muted);line-height:1.6;">If none of the existing groups match what you want to talk about, you can <strong style="color:var(--violet-lt)">propose a brand new group</strong>. Write your vision, pitch it to the Domain Leader, and if it resonates — your group gets launched.</p>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:.5rem;align-items:center;">
-            <div style="background:rgba(124,111,236,.15);border:1px solid rgba(124,111,236,.35);border-radius:10px;padding:.6rem 1rem;font-size:.78rem;font-weight:700;color:var(--violet-lt);text-align:center;white-space:nowrap;">📝 Propose a group</div>
-            <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:.6rem 1rem;font-size:.78rem;font-weight:700;color:var(--emerald);text-align:center;white-space:nowrap;">✅ Leader approves</div>
-            <div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:10px;padding:.6rem 1rem;font-size:.78rem;font-weight:700;color:var(--amber);text-align:center;white-space:nowrap;">🚀 Your group launches</div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- ── TREE DIAGRAM ── -->
+    <div class="tree-section reveal" style="transition-delay:.15s; margin-top:1.5rem;">
+      <div class="tree-wrap">
+
+        <!-- Root node -->
+        <div class="tree-root" id="tree-root-row">
+          <div class="tree-root-node">
+            <span class="tree-root-icon">🗂️</span>
+            <span class="tree-root-label">Interest Domain</span>
+            <span class="tree-root-sub">Layer 2 — click any domain below</span>
+          </div>
+        </div>
+
+        <!-- SVG branches: root → domains -->
+        <svg id="svg-root-domains" class="tree-svg" style="height:48px;" preserveAspectRatio="none">
+          <!-- drawn by JS -->
+        </svg>
+
+        <!-- Domain nodes row -->
+        <div class="tree-domains" id="tree-domains-row">
+          <div class="domain-node active" data-key="social" onclick="selectDomain('social',this)">
+            <div class="domain-box"><span class="domain-emoji">🗣️</span><span class="domain-name">Social Discussion</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="art" onclick="selectDomain('art',this)">
+            <div class="domain-box"><span class="domain-emoji">🎨</span><span class="domain-name">Art</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="env" onclick="selectDomain('env',this)">
+            <div class="domain-box"><span class="domain-emoji">🌱</span><span class="domain-name">Environment</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="anime" onclick="selectDomain('anime',this)">
+            <div class="domain-box"><span class="domain-emoji">🍥</span><span class="domain-name">Anime & Media</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="sports" onclick="selectDomain('sports',this)">
+            <div class="domain-box"><span class="domain-emoji">⚽</span><span class="domain-name">Sports</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="startups" onclick="selectDomain('startups',this)">
+            <div class="domain-box"><span class="domain-emoji">🚀</span><span class="domain-name">Startups</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="games" onclick="selectDomain('games',this)">
+            <div class="domain-box"><span class="domain-emoji">🎲</span><span class="domain-name">Board Games</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="books" onclick="selectDomain('books',this)">
+            <div class="domain-box"><span class="domain-emoji">📚</span><span class="domain-name">Books</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="outdoor" onclick="selectDomain('outdoor',this)">
+            <div class="domain-box"><span class="domain-emoji">🏔️</span><span class="domain-name">Outdoors</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="running" onclick="selectDomain('running',this)">
+            <div class="domain-box"><span class="domain-emoji">🏃</span><span class="domain-name">Running</span></div>
+            <div class="domain-dot"></div>
+          </div>
+          <div class="domain-node" data-key="cards" onclick="selectDomain('cards',this)">
+            <div class="domain-box"><span class="domain-emoji">🃏</span><span class="domain-name">Card Games</span></div>
+            <div class="domain-dot"></div>
+          </div>
+        </div>
+
+        <!-- SVG branches: selected domain → groups -->
+        <svg id="svg-domain-groups" class="tree-svg" style="height:56px;" preserveAspectRatio="none">
+          <!-- drawn by JS -->
+        </svg>
+
+        <!-- Layer 3 label -->
+        <div style="text-align:center;margin-bottom:1rem;">
+          <span style="font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.18);border-radius:100px;padding:.22rem .8rem;">Layer 3 · Discussion Groups</span>
+        </div>
+
+        <!-- Groups panel -->
+        <div class="groups-panel" id="groups-panel">
+          <div class="groups-panel-header">
+            <span class="gph-icon" id="gph-icon">🗣️</span>
+            <div>
+              <div class="gph-title" id="gph-title">Social Discussion</div>
+              <div class="gph-sub" id="gph-sub">Each group focuses on one specific topic within this domain</div>
+            </div>
+            <div class="gph-tag" id="gph-count">6 groups</div>
+          </div>
+          <div class="groups-grid-tree" id="groups-display"></div>
+        </div>
+
+        <!-- Create new group CTA -->
+        <div style="margin-top:1.25rem;background:linear-gradient(135deg,rgba(124,111,236,.1),rgba(52,211,153,.06));border:1.5px dashed rgba(124,111,236,.35);border-radius:14px;padding:1.35rem 1.5rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;">
+          <div style="font-size:1.9rem;">✨</div>
+          <div style="flex:1;min-width:200px;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:.98rem;color:var(--text);margin-bottom:.28rem;">Can't find your group? Create it yourself.</div>
+            <p style="font-size:.83rem;color:var(--muted);line-height:1.6;">Pitch a new group idea to the Domain Leader. If it resonates — your group launches, and <strong style="color:var(--violet-lt)">you become its first Group Leader.</strong></p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.45rem;align-items:center;">
+            <div style="background:rgba(124,111,236,.15);border:1px solid rgba(124,111,236,.35);border-radius:8px;padding:.55rem .9rem;font-size:.77rem;font-weight:700;color:var(--violet-lt);text-align:center;white-space:nowrap;">📝 Propose a group</div>
+            <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:8px;padding:.55rem .9rem;font-size:.77rem;font-weight:700;color:var(--emerald);text-align:center;white-space:nowrap;">✅ Leader approves</div>
+            <div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:8px;padding:.55rem .9rem;font-size:.77rem;font-weight:700;color:var(--amber);text-align:center;white-space:nowrap;">🚀 Your group launches</div>
+          </div>
+        </div>
+
+      </div><!-- /tree-wrap -->
+    </div><!-- /tree-section -->
   </div>
 </section>
 
@@ -1052,57 +1420,216 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav').style.background = window.scrollY > 40 ? 'rgba(9,9,14,0.95)' : 'rgba(9,9,14,0.75)';
 });
 
-/* ── Domain tabs ── */
+/* ══════════════════════════════════
+   TREE DIAGRAM
+══════════════════════════════════ */
 const domainData = {
-  social: [
-    { label:'Group · War',          name:'Armed Conflicts & Wars',     desc:'Causes, history, and consequences of modern conflicts worldwide' },
-    { label:'Group · Market',       name:'Markets & Economics',        desc:'Capitalism, global trade, financial systems and inequality' },
-    { label:'Group · Digital',      name:'Digital Platforms & Society',desc:'Big tech, social media power, algorithmic influence' },
-    { label:'Group · Poverty',      name:'Poverty & Inequality',       desc:'Structural causes, policy solutions, global aid debates' },
-    { label:'Group · Democracy',    name:'Democracy & Elections',      desc:'Voting systems, populism, political participation' },
-    { label:'Group · Rights',       name:'Human Rights',               desc:'Civil liberties, global frameworks, current violations' },
-    { label:'✨ New',               name:'Propose Your Own Group',     desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
-  ],
-  env: [
-    { label:'Group · Climate',      name:'Climate Change & Policy',    desc:'Science, activism, international agreements and net zero' },
-    { label:'Group · Biodiversity', name:'Biodiversity Loss',          desc:'Ecosystems at risk, species extinction, conservation' },
-    { label:'Group · Energy',       name:'Renewable Energy',           desc:'Solar, wind, nuclear — the energy transition debate' },
-    { label:'Group · Plastic',      name:'Ocean & Plastic Pollution',  desc:'Marine ecosystems, corporate responsibility, zero-waste living' },
-    { label:'✨ New',               name:'Propose Your Own Group',     desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
-  ],
-  startups: [
-    { label:'Group · Ideas',        name:'Startup Pitching',           desc:'Share ideas, give feedback, iterate on concepts together' },
-    { label:'Group · Tech',         name:'Tech & Innovation Trends',   desc:'AI, Web3, biotech — what\'s coming and what it means' },
-    { label:'Group · Social Ent.',  name:'Social Entrepreneurship',    desc:'Ventures that solve social problems — purpose-driven business' },
-    { label:'Group · VC',           name:'Venture Capital & Funding',  desc:'How startups raise money, pitch decks, investor mindsets' },
-    { label:'✨ New',               name:'Propose Your Own Group',     desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
-  ],
-  art: [
-    { label:'Group · Visual',       name:'Visual Arts & Illustration', desc:'Drawing, painting, digital art, critiques and portfolios' },
-    { label:'Group · Photography',  name:'Photography',                desc:'Composition, editing, photo walks and documentary work' },
-    { label:'Group · Film',         name:'Film & Video',               desc:'Cinematography, short film production, film analysis' },
-    { label:'Group · Design',       name:'Graphic Design & Branding',  desc:'Typography, visual identity, UI/UX aesthetics' },
-    { label:'✨ New',               name:'Propose Your Own Group',     desc:'Have a topic not listed? Pitch it to the Domain Leader and start it yourself.', isNew: true },
-  ],
+  social:   { icon:'🗣️', name:'Social Discussion',     sub:'Focused on current events, society, and ideas',
+    groups:[
+      { label:'Group · War',       name:'Armed Conflicts & Wars',      desc:'Causes, history, and consequences of modern conflicts' },
+      { label:'Group · Poverty',   name:'Poverty & Inequality',        desc:'Structural causes, policy solutions, global aid debates' },
+      { label:'Group · Digital',   name:'Digital Platforms & Society', desc:'Big tech, social media power, algorithmic influence' },
+      { label:'Group · Economy',   name:'Markets & Economics',         desc:'Capitalism, global trade, financial systems' },
+      { label:'Group · Democracy', name:'Democracy & Elections',       desc:'Voting systems, populism, civic participation' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  art:      { icon:'🎨', name:'Art',                     sub:'Visual arts, design, photography, and film',
+    groups:[
+      { label:'Group · Visual',    name:'Visual Arts & Illustration',  desc:'Drawing, painting, digital art and portfolios' },
+      { label:'Group · Photo',     name:'Photography',                 desc:'Composition, editing, photo walks' },
+      { label:'Group · Film',      name:'Film & Video',                desc:'Cinematography, short films, film analysis' },
+      { label:'Group · Design',    name:'Graphic Design & Branding',   desc:'Typography, visual identity, UI/UX' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  env:      { icon:'🌱', name:'Environment & Activism',  sub:'Climate, sustainability, and ecological action',
+    groups:[
+      { label:'Group · Climate',   name:'Climate Change & Policy',     desc:'Science, activism, international agreements' },
+      { label:'Group · Wildlife',  name:'Biodiversity & Conservation', desc:'Ecosystems at risk, species extinction' },
+      { label:'Group · Energy',    name:'Renewable Energy',            desc:'Solar, wind, nuclear — the energy transition' },
+      { label:'Group · Plastic',   name:'Ocean & Plastic Pollution',   desc:'Marine ecosystems, zero-waste living' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  anime:    { icon:'🍥', name:'Anime & Media',            sub:'Anime, manga, series analysis and fan culture',
+    groups:[
+      { label:'Group · One Piece', name:'One Piece Deep Dive',         desc:'Lore, theories, episode reactions, power scaling' },
+      { label:'Group · Shonen',    name:'Shonen & Action',             desc:'Naruto, JJK, AoT and all things action' },
+      { label:'Group · Indie',     name:'Indie Anime & Manga',         desc:'Hidden gems, lesser-known titles, recs' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  sports:   { icon:'⚽', name:'Sports',                  sub:'Local, national and global sport discussion',
+    groups:[
+      { label:'Group · AFL',       name:'AFL & Football',              desc:'Live match discussion, tips, player analysis' },
+      { label:'Group · Global',    name:'Global Sports',               desc:'Soccer, basketball, cricket, tennis' },
+      { label:'Group · Esports',   name:'Esports & Gaming',            desc:'Competitive gaming, tournaments, strategy' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  startups: { icon:'🚀', name:'Startups & Entrepreneurship', sub:'Business ideas, innovation, and venture thinking',
+    groups:[
+      { label:'Group · Pitch',     name:'Startup Pitching',            desc:'Share ideas, give feedback, iterate on concepts' },
+      { label:'Group · Tech',      name:'Tech & Innovation Trends',    desc:'AI, Web3, biotech — what\'s coming' },
+      { label:'Group · Social',    name:'Social Entrepreneurship',     desc:'Purpose-driven business, ventures with impact' },
+      { label:'Group · VC',        name:'Venture Capital & Funding',   desc:'How startups raise money, investor mindsets' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  games:    { icon:'🎲', name:'Board Games',              sub:'Strategy, tactics, and the joy of tabletop gaming',
+    groups:[
+      { label:'Group · Strategy',  name:'Strategy Games',              desc:'Chess, Catan, Diplomacy, Risk' },
+      { label:'Group · Party',     name:'Party & Social Games',        desc:'Casual and social games for everyone' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  books:    { icon:'📚', name:'Book Reading',             sub:'Monthly reads, literary analysis and recommendations',
+    groups:[
+      { label:'Group · Fiction',   name:'Fiction Club',                desc:'Novels, short stories, literary fiction' },
+      { label:'Group · Non-fic',   name:'Non-Fiction',                 desc:'Biographies, science, history, essays' },
+      { label:'Group · Philosophy',name:'Philosophy Reads',            desc:'Classic and contemporary philosophy texts' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  outdoor:  { icon:'🏔️', name:'Outdoor Activities',       sub:'Hikes, camping, adventure sports and more',
+    groups:[
+      { label:'Group · Hikes',     name:'Day Hikes',                   desc:'Organised hikes around Melbourne and Dandenongs' },
+      { label:'Group · Camping',   name:'Camping & Bushcraft',         desc:'Weekend trips, campfire stories, gear reviews' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  running:  { icon:'🏃', name:'Running',                  sub:'Training, events, and the running mindset',
+    groups:[
+      { label:'Group · Morning',   name:'Morning Runs',                desc:'Organised early runs before school' },
+      { label:'Group · Race',      name:'Race Training',               desc:'Training plans for 5K, 10K, fun runs' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
+  cards:    { icon:'🃏', name:'Card Games',               sub:'Trading card games, poker, and more',
+    groups:[
+      { label:'Group · TCG',       name:'Trading Card Games',          desc:'Pokémon, MTG, Yu-Gi-Oh — deck building & battles' },
+      { label:'Group · Poker',     name:'Poker & Classics',            desc:'Poker strategy, classic card games' },
+      { label:'✨ New',            name:'Propose Your Own Group',      desc:'Pitch a topic to the Domain Leader.', isNew:true },
+    ]},
 };
 
-function switchDomain(key) {
-  document.querySelectorAll('.domain-tab-btn').forEach(btn => {
-    const isActive = btn.getAttribute('onclick').includes(`'${key}'`);
-    btn.style.background = isActive ? 'rgba(251,191,36,0.12)' : 'transparent';
-    btn.style.borderColor = isActive ? 'rgba(251,191,36,0.35)' : 'rgba(255,255,255,0.07)';
-    btn.style.color = isActive ? '#fcd34d' : '#888899';
-  });
-  const groups = domainData[key] || [];
-  document.getElementById('groups-display').innerHTML = groups.map(g => `
+let currentKey = 'social';
+
+function renderGroups(key) {
+  const d = domainData[key];
+  if (!d) return;
+
+  document.getElementById('gph-icon').textContent  = d.icon;
+  document.getElementById('gph-title').textContent = d.name;
+  document.getElementById('gph-sub').textContent   = d.sub;
+  document.getElementById('gph-count').textContent = d.groups.length + ' groups';
+
+  document.getElementById('groups-display').innerHTML = d.groups.map(g => `
     <div class="gp-card" style="${g.isNew ? 'border-style:dashed;border-color:rgba(124,111,236,.3);background:rgba(124,111,236,.04);' : ''}">
       <div class="gp-label" style="${g.isNew ? 'color:var(--violet-lt)' : ''}">${g.label}</div>
-      <div class="gp-name" style="${g.isNew ? 'color:var(--violet-lt)' : ''}">${g.name}</div>
+      <div class="gp-name"  style="${g.isNew ? 'color:var(--violet-lt)' : ''}">${g.name}</div>
       <div class="gp-desc">${g.desc}</div>
     </div>
   `).join('');
 }
-switchDomain('social');
+
+/* Draw SVG branch lines from one source rect to multiple target rects */
+function drawBranches(svgEl, sourceEl, targetEls, color) {
+  svgEl.innerHTML = '';
+  const svgRect = svgEl.getBoundingClientRect();
+  const src = sourceEl.getBoundingClientRect();
+
+  // source point (bottom-center of root/domain node)
+  const sx = src.left + src.width / 2 - svgRect.left;
+  const sy = 0; // top of svg = bottom of element above
+
+  const targets = Array.from(targetEls);
+  const midY = svgRect.height / 2;
+
+  targets.forEach(t => {
+    const tr = t.getBoundingClientRect();
+    const tx = tr.left + tr.width / 2 - svgRect.left;
+    const ty = svgRect.height; // bottom of svg
+
+    // Bezier curve
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    const d = `M ${sx} ${sy} C ${sx} ${midY}, ${tx} ${midY}, ${tx} ${ty}`;
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-opacity', '0.45');
+    path.setAttribute('stroke-linecap', 'round');
+    svgEl.appendChild(path);
+  });
+}
+
+/* Draw branches from selected domain to its group cards */
+function drawDomainToGroups() {
+  const svgEl    = document.getElementById('svg-domain-groups');
+  const svgRect  = svgEl.getBoundingClientRect();
+
+  const activeDomain = document.querySelector('.domain-node.active .domain-box');
+  if (!activeDomain) return;
+
+  const src = activeDomain.getBoundingClientRect();
+  const sx  = src.left + src.width / 2 - svgRect.left;
+  const midY = svgRect.height / 2;
+
+  const cards = document.querySelectorAll('#groups-display .gp-card');
+  svgEl.innerHTML = '';
+
+  cards.forEach(card => {
+    const tr = card.getBoundingClientRect();
+    const tx = tr.left + tr.width / 2 - svgRect.left;
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    const d = `M ${sx} 0 C ${sx} ${midY}, ${tx} ${midY}, ${tx} ${svgRect.height}`;
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', 'rgba(251,191,36,0.4)');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-linecap', 'round');
+    svgEl.appendChild(path);
+  });
+}
+
+/* Draw root → all domain nodes */
+function drawRootToDomains() {
+  const svgEl   = document.getElementById('svg-root-domains');
+  const rootNode = document.querySelector('.tree-root-node');
+  const domNodes = document.querySelectorAll('.domain-node .domain-box');
+  if (!svgEl || !rootNode || !domNodes.length) return;
+  drawBranches(svgEl, rootNode, domNodes, 'rgba(52,211,153,0.35)');
+}
+
+function selectDomain(key, nodeEl) {
+  if (currentKey === key) return;
+  currentKey = key;
+
+  // update active state
+  document.querySelectorAll('.domain-node').forEach(n => n.classList.remove('active'));
+  nodeEl.classList.add('active');
+
+  // animate groups panel out → update → in
+  const panel = document.getElementById('groups-panel');
+  panel.style.opacity = '0';
+  panel.style.transform = 'translateY(8px)';
+  panel.style.transition = 'opacity .2s,transform .2s';
+  setTimeout(() => {
+    renderGroups(key);
+    panel.style.opacity = '1';
+    panel.style.transform = 'translateY(0)';
+    // re-draw branches after groups rendered
+    setTimeout(drawDomainToGroups, 50);
+  }, 200);
+}
+
+/* Initial render + draw */
+renderGroups('social');
+
+/* Draw after layout is ready */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    drawRootToDomains();
+    drawDomainToGroups();
+  }, 100);
+});
+
+window.addEventListener('resize', () => {
+  drawRootToDomains();
+  drawDomainToGroups();
+});
 
 /* ── Join submit ── */
 function handleJoin() {
