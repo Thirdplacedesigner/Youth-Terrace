@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join the Admin Team — Nexus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #09090e;
+  --bg2:     #0e0e16;
+  --bg3:     #12121c;
+  --sf:      #16161f;
+  --sf2:     #1c1c28;
+  --bd:      rgba(255,255,255,0.07);
+  --bd2:     rgba(255,255,255,0.04);
+  --violet:  #7c6fec;
+  --vlt:     #a89fff;
+  --vglow:   rgba(124,111,236,0.22);
+  --emerald: #34d399;
+  --amber:   #fbbf24;
+  --sky:     #38bdf8;
+  --rose:    #f87171;
+  --text:    #eeeef6;
+  --muted:   #888899;
+  --dim:     #44445a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.65;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5;}
+
+h1,h2,h3,h4{font-family:'Syne',sans-serif;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 2rem;}
+section{padding:6rem 0;}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  height:62px;padding:0 2.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(9,9,14,.88);
+  backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid var(--bd);
+}
+.nav-back{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--muted);font-size:.87rem;font-weight:500;transition:color .2s;}
+.nav-back:hover{color:var(--text);}
+.nav-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;background:linear-gradient(135deg,#fff 40%,var(--vlt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* ── HERO ── */
+#hero{
+  min-height:62vh;display:flex;align-items:center;
+  position:relative;overflow:hidden;padding-top:2rem;
+}
+.hero-orbs{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 60% at 70% 40%,rgba(124,111,236,.13) 0%,transparent 65%),
+             radial-gradient(ellipse 40% 40% at 15% 75%,rgba(251,191,36,.05) 0%,transparent 55%);}
+.hero-mesh{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 75%);}
+
+.lbl{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--vlt);display:block;margin-bottom:.9rem;}
+
+/* ── ROLE CARDS ── */
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+.rc{
+  background:var(--sf);border:1px solid var(--bd);
+  border-radius:16px;padding:1.6rem;
+  position:relative;overflow:hidden;
+  transition:all .25s;
+}
+.rc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:opacity .3s;opacity:.6;}
+.rc:hover{background:var(--sf2);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.3);}
+.rc:hover::before{opacity:1;}
+.rc-icon{font-size:1.8rem;margin-bottom:.8rem;}
+.rc h4{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--text);margin-bottom:.5rem;}
+.rc p{font-size:.82rem;color:var(--muted);line-height:1.65;}
+.rc-tag{display:inline-flex;align-items:center;padding:.16rem .65rem;border-radius:100px;font-size:.67rem;font-weight:700;margin-top:.75rem;}
+
+/* ── REALITY SECTION ── */
+.reality-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start;}
+
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;align-items:flex-start;gap:1rem;padding-bottom:1.25rem;position:relative;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;left:15px;top:32px;bottom:0;width:2px;background:rgba(255,255,255,.05);}
+.tl-dot{width:30px;height:30px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;position:relative;z-index:1;background:var(--bg);}
+.tl-item h5{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.15rem;padding-top:.1rem;}
+.tl-item p{font-size:.8rem;color:var(--muted);line-height:1.55;}
+
+/* ── GROWTH CARDS ── */
+.growth-cards{display:flex;flex-direction:column;gap:.85rem;}
+.gc{display:flex;align-items:flex-start;gap:.85rem;padding:1rem 1.15rem;background:var(--sf);border:1px solid var(--bd);border-radius:12px;transition:all .22s;}
+.gc:hover{background:var(--sf2);border-color:rgba(124,111,236,.28);transform:translateX(4px);}
+.gc-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.gc h5{font-size:.9rem;font-weight:700;margin-bottom:.1rem;}
+.gc p{font-size:.8rem;color:var(--muted);line-height:1.5;}
+
+/* ── QUOTE ── */
+.quote-block{font-family:'Syne',sans-serif;font-style:italic;font-size:clamp(1.1rem,2vw,1.55rem);font-weight:600;line-height:1.5;color:rgba(238,238,246,.88);border-left:3px solid var(--violet);padding-left:1.3rem;letter-spacing:-.01em;}
+
+/* ── FORM ── */
+.admin-form-wrap{max-width:620px;margin:0 auto;}
+.join-form{background:var(--sf);border:1px solid var(--bd);border-radius:20px;padding:2.25rem;}
+.jf-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-.02em;margin-bottom:.4rem;}
+.jf-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;}
+.field{margin-bottom:1.1rem;}
+.field label{display:block;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:.4rem;letter-spacing:.02em;}
+.field input,.field select,.field textarea{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,111,236,.12);}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim);}
+.field textarea{resize:vertical;min-height:90px;}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.45rem;}
+.chip{padding:.35rem .85rem;border-radius:100px;border:1px solid var(--bd);background:transparent;color:var(--muted);font-size:.77rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .18s;}
+.chip:hover,.chip.on{background:rgba(124,111,236,.15);border-color:rgba(124,111,236,.4);color:var(--vlt);}
+.btn-submit{width:100%;padding:.9rem;background:var(--violet);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;box-shadow:0 0 28px var(--vglow);margin-top:.5rem;}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 0 48px var(--vglow),0 8px 28px rgba(124,111,236,.3);}
+
+/* ── FOOTER ── */
+footer{background:var(--bg3);border-top:1px solid var(--bd);padding:2.5rem 0;}
+.foot-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.25rem;}
+.foot-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;background:linear-gradient(135deg,#fff,var(--vlt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.foot-copy{font-size:.73rem;color:var(--dim);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:860px){
+  .role-grid{grid-template-columns:1fr 1fr;}
+  .reality-grid{grid-template-columns:1fr;gap:2.5rem;}
+}
+@media(max-width:560px){
+  section{padding:3.5rem 0;}
+  .wrap{padding:0 1rem;}
+  .role-grid{grid-template-columns:1fr;}
+  .join-form{padding:1.5rem 1.1rem;}
+  nav{padding:0 1rem;}
+  #hero{padding-bottom:3rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-back">← Back to Nexus</a>
+  <div class="nav-brand">Nexus.</div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-orbs"></div>
+  <div class="hero-mesh"></div>
+  <div class="wrap" style="position:relative;z-index:2;">
+    <div style="max-width:700px;">
+      <span class="lbl">⚡ Admin Team</span>
+      <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.0;letter-spacing:-.03em;margin-bottom:1rem;">
+        Run the platform.<br>
+        <span style="background:linear-gradient(135deg,var(--violet),var(--vlt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Shape the community.</span>
+      </h1>
+      <p style="font-size:1.1rem;color:var(--muted);line-height:1.8;font-weight:300;max-width:540px;margin-bottom:2rem;">The admin team is the backbone of Nexus. If you want real responsibility, real skills, and real impact — this is where you start.</p>
+      <div style="display:flex;gap:.65rem;flex-wrap:wrap;">
+        <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(124,111,236,.1);border:1px solid rgba(124,111,236,.28);border-radius:100px;padding:.3rem .9rem;font-size:.78rem;font-weight:600;color:var(--vlt);">🏫 Work with teachers</span>
+        <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:100px;padding:.3rem .9rem;font-size:.78rem;font-weight:600;color:var(--emerald);">🤝 Connect communities</span>
+        <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:100px;padding:.3rem .9rem;font-size:.78rem;font-weight:600;color:var(--amber);">📈 Build real skills</span>
+        <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);border-radius:100px;padding:.3rem .9rem;font-size:.78rem;font-weight:600;color:var(--sky);">🌐 Make things happen</span>
+      </div>
+      <div style="margin-top:2rem;">
+        <a href="#apply" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--violet);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;padding:.75rem 1.75rem;border-radius:100px;text-decoration:none;box-shadow:0 0 28px var(--vglow);transition:all .22s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Apply now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT ADMINS DO ── -->
+<section id="what" style="background:var(--bg2);">
+  <div class="wrap">
+    <div class="sec-head center reveal" style="margin-bottom:3rem;">
+      <span class="lbl">What Admins Actually Do</span>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.1;letter-spacing:-.025em;margin-bottom:.9rem;">Real work. Real impact.</h2>
+      <p style="font-size:1.05rem;color:var(--muted);max-width:520px;margin:0 auto;">Admins don't just moderate a chat. They run an ecosystem — connecting students, schools, teachers, and the world beyond.</p>
+    </div>
+    <div class="role-grid reveal" style="transition-delay:.08s">
+      <div class="rc">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--vlt));"></div>
+        <div class="rc-icon">🤝</div>
+        <h4>School Liaison</h4>
+        <p>Work directly with teachers to facilitate external collaborations. When a student group wants to connect with an NPO or another school, you prepare the proposal and make the introduction happen.</p>
+        <span class="rc-tag" style="background:rgba(124,111,236,.1);border:1px solid rgba(124,111,236,.25);color:var(--vlt);">Works with teachers</span>
+      </div>
+      <div class="rc">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--emerald),#86efac);"></div>
+        <div class="rc-icon">🌐</div>
+        <h4>External Connector</h4>
+        <p>Build partnerships with organisations, universities, and other school communities. You're the bridge between what's happening inside Nexus and the real world opportunities that can amplify it.</p>
+        <span class="rc-tag" style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.22);color:var(--emerald);">External relations</span>
+      </div>
+      <div class="rc">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),#fde68a);"></div>
+        <div class="rc-icon">⚙️</div>
+        <h4>Platform Manager</h4>
+        <p>Keep the Discord server running smoothly. Create new domains when there's demand, onboard Domain Leaders and Group Leaders, and make sure the structure stays clear and navigable for everyone.</p>
+        <span class="rc-tag" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.22);color:var(--amber);">Server management</span>
+      </div>
+      <div class="rc">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--sky),#93c5fd);"></div>
+        <div class="rc-icon">🛡️</div>
+        <h4>Safety Guardian</h4>
+        <p>Monitor the platform, respond to reports, and escalate issues when needed. You're the final line of moderation — enforcing community guidelines and ensuring every student feels safe and respected.</p>
+        <span class="rc-tag" style="background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.22);color:var(--sky);">Moderation & safety</span>
+      </div>
+      <div class="rc">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rose),#fca5a5);"></div>
+        <div class="rc-icon">📣</div>
+        <h4>Community Voice</h4>
+        <p>Write announcements, share updates, and keep the community informed and energised. You shape how Nexus presents itself — online, in posters around school, and beyond.</p>
+        <span class="rc-tag" style="background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.22);color:var(--rose);">Communications</span>
+      </div>
+      <div class="rc">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c084fc,var(--vlt));"></div>
+        <div class="rc-icon">💡</div>
+        <h4>Vision Keeper</h4>
+        <p>Help shape where Nexus goes next. Propose new features, suggest improvements, and make sure the platform continues to evolve in a direction that actually serves students.</p>
+        <span class="rc-tag" style="background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.22);color:#c084fc;">Strategy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS DAY TO DAY ── -->
+<section id="reality" style="background:var(--bg3);">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom:3rem;">
+      <span class="lbl">The Reality</span>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.1;letter-spacing:-.025em;margin-bottom:.9rem;">What does an admin week actually look like?</h2>
+      <p style="font-size:1.05rem;color:var(--muted);max-width:520px;">It's not overwhelming. It's structured. Here's what the commitment actually looks like.</p>
+    </div>
+    <div class="reality-grid">
+      <div class="reveal">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--vlt);margin-bottom:1.25rem;">Regular rhythm</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot" style="border-color:rgba(124,111,236,.4);color:var(--vlt);">📅</div>
+            <div><h5>Monthly Admin Meeting</h5><p>The whole team meets once a month to review what's working, plan what's next, and make decisions together. This is the heartbeat of how Nexus grows.</p></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="border-color:rgba(52,211,153,.35);color:var(--emerald);">💬</div>
+            <div><h5>Ongoing Discord Presence</h5><p>Check the server regularly — not obsessively, but consistently. Respond to questions, keep an eye on the community, and flag anything that needs attention.</p></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="border-color:rgba(251,191,36,.35);color:var(--amber);">🤝</div>
+            <div><h5>Teacher Touchpoints</h5><p>When a Domain Leader submits a collaboration proposal, you liaise with a relevant teacher. This happens as-needed, not constantly — and you always have the proposal ready to hand over.</p></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="border-color:rgba(56,189,248,.32);color:var(--sky);">📋</div>
+            <div><h5>Responding to Reports</h5><p>When someone flags an issue, you handle it promptly. Most cases are minor and resolved quickly. Serious issues follow a clear escalation process — you're never left figuring it out alone.</p></div>
+          </div>
+          <div class="tl-item" style="padding-bottom:0;">
+            <div class="tl-dot" style="border-color:rgba(248,113,113,.32);color:var(--rose);">🌟</div>
+            <div><h5>Making Things Happen</h5><p>When something exciting comes up — a cross-school event, a new domain proposal, a guest speaker idea — you're the one who turns it from a conversation into reality.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.14s">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--vlt);margin-bottom:1.25rem;">Why it's worth it</div>
+        <div class="quote-block" style="margin-bottom:2rem;">
+          "You're not just managing a Discord. You're building something real — and the skills you develop here are ones most students don't get until university."
+        </div>
+        <div class="growth-cards">
+          <div class="gc"><div class="gc-icon" style="background:rgba(124,111,236,.12)">🗣️</div><div><h5>Communication & Negotiation</h5><p>Writing proposals, liaising with teachers and external organisations, running meetings — all real professional skills.</p></div></div>
+          <div class="gc"><div class="gc-icon" style="background:rgba(52,211,153,.1)">🧠</div><div><h5>Strategic Thinking</h5><p>Deciding what the platform needs next, how to grow communities, and how to solve problems before they escalate.</p></div></div>
+          <div class="gc"><div class="gc-icon" style="background:rgba(251,191,36,.1)">👥</div><div><h5>Community Leadership</h5><p>Learning how to earn trust from peers, motivate people, and create an environment others actually want to be part of.</p></div></div>
+          <div class="gc"><div class="gc-icon" style="background:rgba(56,189,248,.1)">🌐</div><div><h5>Real-World Connections</h5><p>Meet people outside of school — at other schools, in NPOs, in the working world. Nexus opens doors.</p></div></div>
+          <div class="gc"><div class="gc-icon" style="background:rgba(248,113,113,.1)">📄</div><div><h5>Something for Your Resume</h5><p>Co-founded and helped run a student community platform. That's a genuine talking point for university applications and beyond.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── APPLY FORM ── -->
+<section id="apply" style="background:var(--bg2);">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:2.5rem;" class="reveal">
+      <span class="lbl">Apply</span>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.1;letter-spacing:-.025em;margin-bottom:.85rem;">Express your interest<br>in the Admin Team.</h2>
+      <p style="font-size:1.05rem;color:var(--muted);max-width:500px;margin:0 auto;">We're looking for students who are curious, reliable, and excited about building something. Tell us about yourself.</p>
+    </div>
+    <div class="admin-form-wrap">
+      <div class="join-form reveal" style="transition-delay:.1s">
+        <div class="jf-title">⚡ Admin Application</div>
+        <p class="jf-sub">There are no wrong answers here. We want to know who you are and what excites you — not how impressive your CV is.</p>
+        <form id="admin-form">
+          <div class="field">
+            <label>Full Name <span style="color:var(--rose)">*</span></label>
+            <input type="text" id="a-name" placeholder="e.g. Alex Kim" required>
+          </div>
+          <div class="field">
+            <label>Year Level <span style="color:var(--rose)">*</span></label>
+            <select id="a-year" required>
+              <option value="" disabled selected>Select your year</option>
+              <option>Year 9</option>
+              <option>Year 10</option>
+              <option>Year 11</option>
+              <option>Year 12</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>School Email Address <span style="color:var(--rose)">*</span></label>
+            <input type="email" id="a-email" placeholder="yourname@student.school.edu.au" required>
+          </div>
+          <div class="field">
+            <label>Which admin roles interest you? <span style="color:var(--rose)">*</span></label>
+            <div class="chips" id="admin-chips">
+              <button type="button" class="chip" onclick="this.classList.toggle('on')">🤝 School Liaison</button>
+              <button type="button" class="chip" onclick="this.classList.toggle('on')">🌐 External Connector</button>
+              <button type="button" class="chip" onclick="this.classList.toggle('on')">⚙️ Platform Manager</button>
+              <button type="button" class="chip" onclick="this.classList.toggle('on')">🛡️ Safety Guardian</button>
+              <button type="button" class="chip" onclick="this.classList.toggle('on')">📣 Community Voice</button>
+              <button type="button" class="chip" onclick="this.classList.toggle('on')">💡 Vision Keeper</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>What interests or passions do you have — and how do you see them connecting to the admin role? <span style="color:var(--rose)">*</span></label>
+            <textarea id="a-connect" rows="4" placeholder="e.g. I'm really into community building and I've been helping organise events at school. I think the Platform Manager role fits because I'm good at keeping systems clear..." required></textarea>
+          </div>
+          <div class="field">
+            <label>Is there anything specific you'd want to change or improve about how the platform works?</label>
+            <textarea id="a-improve" rows="3" placeholder="Optional — but we'd love to hear your honest take."></textarea>
+          </div>
+          <button type="button" class="btn-submit" id="a-btn" onclick="submitAdminForm()">Submit Admin Application →</button>
+          <p style="font-size:.73rem;color:var(--dim);text-align:center;margin-top:.75rem;">We'll be in touch via your school email within a few days.</p>
+        </form>
+        <div id="admin-success" style="display:none;background:rgba(124,111,236,.08);border:1.5px solid rgba(124,111,236,.28);border-radius:12px;padding:1.35rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:.5rem;">⚡</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--vlt);margin-bottom:.4rem;">Application received!</div>
+          <div style="font-size:.85rem;color:var(--muted);">We'll be in touch via your school email within a few days.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div><div class="foot-brand">Nexus.</div><div style="font-size:.73rem;color:var(--dim);margin-top:.2rem;">Sandringham College · Admin Team</div></div>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+        <a href="index.html" style="font-size:.82rem;color:var(--dim);text-decoration:none;font-weight:500;transition:color .2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--dim)'">← Back to Nexus</a>
+        <a href="index.html#join" style="font-size:.82rem;color:var(--dim);text-decoration:none;font-weight:500;transition:color .2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--dim)'">Join as Member</a>
+      </div>
+      <div style="font-size:.73rem;color:var(--dim);">© 2025 Nexus. A prototype platform.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Scroll reveal */
+const items = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -28px 0px' });
+items.forEach(el => io.observe(el));
+
+/* Nav scroll */
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background = window.scrollY > 30 ? 'rgba(9,9,14,0.95)' : 'rgba(9,9,14,0.88)';
+});
+
+/* ══════════════════════════════════
+   ADMIN FORM SUBMISSION
+   Replace ADMIN_SCRIPT_URL with your deployed Apps Script URL.
+══════════════════════════════════ */
+const ADMIN_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+function submitAdminForm() {
+  const name    = document.getElementById('a-name').value.trim();
+  const year    = document.getElementById('a-year').value;
+  const email   = document.getElementById('a-email').value.trim();
+  const roles   = [...document.querySelectorAll('#admin-chips .chip.on')]
+                    .map(c => c.textContent.trim()).join(', ');
+  const connect = document.getElementById('a-connect').value.trim();
+  const improve = document.getElementById('a-improve').value.trim();
+
+  if (!name)    { alert('Please enter your full name.'); return; }
+  if (!year)    { alert('Please select your year level.'); return; }
+  if (!email)   { alert('Please enter your school email address.'); return; }
+  if (!roles)   { alert('Please select at least one admin role. 👆'); return; }
+  if (!connect) { alert('Please fill in the interests/connection field.'); return; }
+
+  const btn = document.getElementById('a-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  /* Fallback if Apps Script not set up yet */
+  if (ADMIN_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    const subject = encodeURIComponent('[Nexus] Admin Team Application');
+    const body = encodeURIComponent(
+      'Name: ' + name + '\nYear Level: ' + year +
+      '\nSchool Email: ' + email + '\nInterested Roles: ' + roles +
+      '\n\nInterests & Connection:\n' + connect +
+      '\n\nImprovements:\n' + (improve || '(none)')
+    );
+    window.open('https://mail.google.com/mail/?view=cm&to=nexussandringham%40gmail.com&su=' + subject + '&body=' + body, '_blank');
+    document.getElementById('admin-form').style.display = 'none';
+    document.getElementById('admin-success').style.display = 'block';
+    return;
+  }
+
+  fetch(ADMIN_SCRIPT_URL, {
+    method: 'POST', mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ type:'admin', name, year, email, roles, connect, improve })
+  }).then(() => {
+    document.getElementById('admin-form').style.display = 'none';
+    document.getElementById('admin-success').style.display = 'block';
+  }).catch(() => {
+    btn.textContent = 'Submit Admin Application →';
+    btn.disabled = false;
+    alert('Something went wrong. Please email nexussandringham@gmail.com directly.');
+  });
+}
+</script>
+</body>
+</html>
