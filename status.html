@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Status — Nexus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#09090e;--bg2:#0e0e16;--sf:#16161f;--sf2:#1c1c28;
+  --bd:rgba(255,255,255,0.07);
+  --violet:#7c6fec;--vlt:#a89fff;--vglow:rgba(124,111,236,0.2);
+  --emerald:#34d399;--amber:#fbbf24;--sky:#38bdf8;--rose:#f87171;
+  --text:#eeeef6;--muted:#888899;--dim:#44445a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.65;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5;}
+h1,h2,h3,h4{font-family:'Syne',sans-serif;}
+.wrap{max-width:760px;margin:0 auto;padding:0 1.5rem;}
+
+nav{position:sticky;top:0;z-index:200;height:62px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,14,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);}
+.nav-back{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--muted);font-size:.87rem;font-weight:500;transition:color .2s;}
+.nav-back:hover{color:var(--text);}
+.nav-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;background:linear-gradient(135deg,#fff 40%,var(--vlt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── page header ── */
+.page-head{padding:4rem 0 3rem;text-align:center;}
+.lbl{font-size:.67rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--rose);display:block;margin-bottom:.85rem;}
+.page-head h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.75rem;}
+.page-head p{font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto;}
+
+/* ── status cards ── */
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:3rem;}
+.stat-card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:1.5rem;text-align:center;}
+.stat-val{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;line-height:1;margin-bottom:.4rem;}
+.stat-label{font-size:.8rem;color:var(--muted);}
+
+/* ── section ── */
+.section{padding:2.5rem 0;}
+.section h2{font-size:1.15rem;font-weight:800;margin-bottom:1.1rem;color:var(--text);}
+
+/* ── phase list ── */
+.phase{display:flex;gap:1rem;padding:1.1rem 1.25rem;background:var(--sf);border:1px solid var(--bd);border-radius:12px;margin-bottom:.75rem;transition:all .2s;}
+.phase.active{border-color:rgba(124,111,236,.35);background:rgba(124,111,236,.06);}
+.phase.done{border-color:rgba(52,211,153,.28);background:rgba(52,211,153,.04);}
+.phase-badge{flex-shrink:0;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;font-family:'Syne',sans-serif;}
+.phase-badge.active{background:rgba(124,111,236,.15);color:var(--vlt);border:1.5px solid rgba(124,111,236,.35);}
+.phase-badge.pending{background:var(--sf2);color:var(--dim);border:1.5px solid var(--bd);}
+.phase-badge.done{background:rgba(52,211,153,.12);color:var(--emerald);border:1.5px solid rgba(52,211,153,.28);}
+.phase h3{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
+.phase p{font-size:.8rem;color:var(--muted);line-height:1.55;}
+.phase-tag{display:inline-flex;align-items:center;padding:.14rem .6rem;border-radius:100px;font-size:.65rem;font-weight:700;margin-top:.5rem;}
+
+/* ── checklist ── */
+.check-list{display:flex;flex-direction:column;gap:.55rem;}
+.check-item{display:flex;align-items:flex-start;gap:.7rem;padding:.8rem 1rem;background:var(--sf);border:1px solid var(--bd);border-radius:10px;}
+.check-icon{width:22px;height:22px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;}
+.check-icon.done{background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);color:var(--emerald);}
+.check-icon.pending{background:var(--sf2);border:1px solid var(--bd);color:var(--dim);}
+.check-item p{font-size:.84rem;color:var(--muted);line-height:1.5;}
+.check-item p strong{color:var(--text);}
+
+/* ── CTA ── */
+.cta-row{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;padding:2.5rem 0 3rem;}
+.btn-primary{display:inline-flex;align-items:center;gap:.45rem;padding:.7rem 1.5rem;border-radius:100px;background:var(--violet);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;text-decoration:none;box-shadow:0 0 22px var(--vglow);transition:all .22s;}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-ghost{display:inline-flex;align-items:center;gap:.45rem;padding:.7rem 1.5rem;border-radius:100px;border:1px solid var(--bd);color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:.88rem;text-decoration:none;transition:all .22s;}
+.btn-ghost:hover{background:var(--sf);transform:translateY(-2px);}
+
+footer{border-top:1px solid var(--bd);padding:2rem 0;text-align:center;}
+footer p{font-size:.75rem;color:var(--dim);}
+
+@media(max-width:560px){
+  .status-grid{grid-template-columns:1fr 1fr;}
+  .stat-val{font-size:2rem;}
+  nav{padding:0 1rem;}
+  .wrap{padding:0 1rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="./index.html" class="nav-back">← Back to Nexus</a>
+  <span class="nav-brand">Nexus.</span>
+</nav>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="page-head reveal">
+    <span class="lbl">⚠️ Honest status update</span>
+    <h1>Where Nexus is right now.</h1>
+    <p>No spin. This is what actually exists — and what we're building toward.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="status-grid reveal" style="transition-delay:.06s">
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--violet);">~5</div>
+      <div class="stat-label">People on Discord</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--amber);">0</div>
+      <div class="stat-label">Domains or groups</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--emerald);">✓</div>
+      <div class="stat-label">Website live</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" style="color:var(--sky);">✓</div>
+      <div class="stat-label">Admin system ready</div>
+    </div>
+  </div>
+
+  <!-- What exists now -->
+  <div class="section reveal" style="transition-delay:.1s">
+    <h2>What actually exists right now</h2>
+    <div class="check-list">
+      <div class="check-item"><div class="check-icon done">✓</div><p><strong>This website</strong> — explaining the vision, structure, and how to get involved.</p></div>
+      <div class="check-item"><div class="check-icon done">✓</div><p><strong>Admin application system</strong> — you can apply to help build and run Nexus.</p></div>
+      <div class="check-item"><div class="check-icon done">✓</div><p><strong>Expression of interest form</strong> — so we can contact you when the Discord launches.</p></div>
+      <div class="check-item"><div class="check-icon done">✓</div><p><strong>Discord server</strong> — open. A small group is already talking. No formal structure yet.</p></div>
+      <div class="check-item"><div class="check-icon pending">–</div><p><strong>Active groups</strong> — none yet. These will be created by the first members who join.</p></div>
+      <div class="check-item"><div class="check-icon pending">–</div><p><strong>Domain Leaders</strong> — none yet. We're looking for the first people to step into these roles.</p></div>
+    </div>
+  </div>
+
+  <!-- Roadmap -->
+  <div class="section reveal" style="transition-delay:.14s">
+    <h2>The roadmap</h2>
+
+    <div class="phase active">
+      <div class="phase-badge active">→</div>
+      <div>
+        <h3>Phase 0 — Now: A few people, one chat, no structure</h3>
+        <p>Discord is open. A small group is talking. No domains, no groups, no leaders yet — just the start of something.</p>
+        <span class="phase-tag" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:var(--emerald);">We are here — come join the conversation</span>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-badge pending">1</div>
+      <div>
+        <h3>Phase 1 — First members (10–30 people)</h3>
+        <p>Open the Discord to the first wave. Start with a single general chat. Let conversations happen naturally and identify what domains people actually want.</p>
+        <span class="phase-tag" style="background:var(--sf2);border:1px solid var(--bd);color:var(--dim);">Upcoming</span>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-badge pending">2</div>
+      <div>
+        <h3>Phase 2 — First domains (30–100 people)</h3>
+        <p>Create the first 2–3 domains based on what members actually want. Assign Domain Leaders. Launch the first application-based groups.</p>
+        <span class="phase-tag" style="background:var(--sf2);border:1px solid var(--bd);color:var(--dim);">Upcoming</span>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-badge pending">3</div>
+      <div>
+        <h3>Phase 3 — Full structure (100+ people)</h3>
+        <p>All 11 domains active. External collaborations. Cross-community events. The vision on the homepage becomes real.</p>
+        <span class="phase-tag" style="background:var(--sf2);border:1px solid var(--bd);color:var(--dim);">Future</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- The honest pitch -->
+  <div class="reveal" style="transition-delay:.18s;background:linear-gradient(135deg,rgba(124,111,236,.12),rgba(52,211,153,.06));border:1.5px solid rgba(124,111,236,.28);border-radius:16px;padding:1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--emerald));"></div>
+    <div style="font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--vlt);margin-bottom:.6rem;">The honest pitch</div>
+    <p style="font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;color:var(--text);line-height:1.5;margin-bottom:.6rem;">Nexus just started. A few students are already in. The structure isn't built yet.</p>
+    <p style="font-size:.88rem;color:var(--muted);line-height:1.75;">Right now there's just a Discord and a handful of people. No domains, no groups, no leaders. The people who show up now are the ones who decide what this becomes — that's not a sales pitch, that's just what's true.</p>
+  </div>
+
+  <!-- CTAs -->
+  <div class="cta-row reveal" style="transition-delay:.22s">
+    <a href="./admin.html" class="btn-primary">⚡ Join as Admin — build it with us</a>
+    <a href="./index.html#join" class="btn-ghost">Express interest as member</a>
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <p>Nexus · Independent Student Community · Australia</p>
+</footer>
+
+<script>
+const items = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+items.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
