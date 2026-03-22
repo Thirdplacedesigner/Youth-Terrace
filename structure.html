@@ -181,98 +181,165 @@ footer{border-top:1px solid var(--bd);padding:2rem 0;}
       <div style="font-size:.67rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--vlt);margin-bottom:1rem;">Diagram 1 — How admin, domains, and groups relate</div>
       <div style="background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:1.5rem;overflow:hidden;">
         <svg width="100%" viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%;">
-          <defs>
-            <marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-              <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </marker>
-          </defs>
+  <defs>
+    <marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
 
-          <!-- NEXUS DISCORD SERVER border -->
-          <rect x="20" y="18" width="560" height="160" rx="14" fill="rgba(124,111,236,.03)" stroke="rgba(124,111,236,.22)" stroke-width="1.5" stroke-dasharray="6 3"/>
-          <text x="38" y="36" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="700" letter-spacing="2" fill="#44445a">NEXUS DISCORD SERVER</text>
+  <!-- Admin → External route (above server box) -->
+  <path d="M98 66 L98 16 L716 16 L716 56"
+        stroke="rgba(124,111,236,.38)" stroke-width="1.3" fill="none" marker-end="url(#ar1)"/>
+  <text x="400" y="12" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8.5" fill="#a89fff">Admin is the only bridge to the outside world</text>
 
-          <!-- Admin -->
-          <rect x="38" y="46" width="150" height="64" rx="10" fill="rgba(124,111,236,.12)" stroke="rgba(124,111,236,.4)" stroke-width="1"/>
-          <text x="113" y="73" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="13" font-weight="700" fill="#a89fff">&#9889; Admin</text>
-          <text x="113" y="91" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#888899">Runs the whole platform</text>
+  <!-- ══ NEXUS DISCORD SERVER (x=10 y=36 w=570 h=222, bottom=258) ══ -->
+  <rect x="10" y="36" width="570" height="222" rx="14"
+        fill="rgba(124,111,236,.04)" stroke="rgba(124,111,236,.3)" stroke-width="1.5"/>
+  <text x="30" y="54"
+        font-family="DM Sans,sans-serif" font-size="9" font-weight="700"
+        letter-spacing="2" fill="#44445a">NEXUS DISCORD SERVER</text>
 
-          <!-- Admin to Domain arrows -->
-          <line x1="188" y1="74" x2="212" y2="74" stroke="rgba(255,255,255,.18)" stroke-width="1" marker-end="url(#ar1)" fill="none"/>
-          <line x1="212" y1="68" x2="188" y2="68" stroke="rgba(255,255,255,.18)" stroke-width="1" marker-end="url(#ar1)" fill="none"/>
+  <!-- Admin (x=28 y=66 w=140 h=52) -->
+  <rect x="28" y="66" width="140" height="52" rx="10"
+        fill="rgba(124,111,236,.14)" stroke="rgba(124,111,236,.42)" stroke-width="1"/>
+  <text x="98" y="90" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="13" font-weight="700" fill="#a89fff">&#9889; Admin</text>
+  <text x="98" y="107" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">Manages the platform</text>
 
-          <!-- Domain A -->
-          <rect x="214" y="46" width="150" height="64" rx="10" fill="rgba(52,211,153,.09)" stroke="rgba(52,211,153,.32)" stroke-width="1"/>
-          <text x="289" y="73" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#6ee7b7">Domain A</text>
-          <text x="289" y="91" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#888899">e.g. Social Discussion</text>
+  <!-- Announcements (x=182 y=66 w=376 h=52) -->
+  <rect x="182" y="66" width="376" height="52" rx="10"
+        fill="rgba(56,189,248,.06)" stroke="rgba(56,189,248,.18)" stroke-width="1"/>
+  <text x="370" y="90" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#7dd3fc">&#128227; Announcements</text>
+  <text x="370" y="107" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8.5" fill="#44445a">Server-wide · Visible to all members</text>
 
-          <!-- Domain B -->
-          <rect x="376" y="46" width="120" height="64" rx="10" fill="rgba(52,211,153,.07)" stroke="rgba(52,211,153,.22)" stroke-width="1"/>
-          <text x="436" y="73" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#6ee7b7">Domain B</text>
-          <text x="436" y="91" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#888899">e.g. Art</text>
+  <!-- ── Domain row (y=138 h=52, bottom=190, server bottom=258 — 68px clear) ── -->
+  <!-- Social Discussion: x=28 w=160 center=108 -->
+  <rect x="28" y="138" width="160" height="52" rx="9"
+        fill="rgba(52,211,153,.09)" stroke="rgba(52,211,153,.32)" stroke-width="1"/>
+  <text x="108" y="161" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#6ee7b7">Social Discussion</text>
+  <text x="108" y="178" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Domain</text>
 
-          <!-- +more -->
-          <rect x="508" y="46" width="56" height="64" rx="10" fill="rgba(52,211,153,.03)" stroke="rgba(52,211,153,.12)" stroke-width="1" stroke-dasharray="3 2"/>
-          <text x="536" y="82" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#44445a">+9 more</text>
+  <!-- Art: x=202 w=78 center=241 -->
+  <rect x="202" y="138" width="78" height="52" rx="9"
+        fill="rgba(52,211,153,.09)" stroke="rgba(52,211,153,.32)" stroke-width="1"/>
+  <text x="241" y="161" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#6ee7b7">Art</text>
+  <text x="241" y="178" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Domain</text>
 
-          <!-- Announcements bar -->
-          <rect x="38" y="126" width="526" height="40" rx="7" fill="rgba(56,189,248,.05)" stroke="rgba(56,189,248,.16)" stroke-width="1"/>
-          <text x="301" y="143" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#7dd3fc">&#128227; Server-wide announcements &amp; domain info channels</text>
-          <text x="301" y="158" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#44445a">Open to all members</text>
+  <!-- Board Games: x=294 w=122 center=355 -->
+  <rect x="294" y="138" width="122" height="52" rx="9"
+        fill="rgba(52,211,153,.09)" stroke="rgba(52,211,153,.32)" stroke-width="1"/>
+  <text x="355" y="161" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#6ee7b7">Board Games</text>
+  <text x="355" y="178" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Domain</text>
 
-          <!-- GROUPS label - outside server -->
-          <text x="38" y="204" font-family="DM Sans,sans-serif" font-size="8.5" font-weight="700" letter-spacing="1.5" fill="#fbbf24">GROUPS  -  each runs its own separate Discord group or chat</text>
+  <!-- Outdoors: x=430 w=90 center=475 -->
+  <rect x="430" y="138" width="90" height="52" rx="9"
+        fill="rgba(52,211,153,.09)" stroke="rgba(52,211,153,.32)" stroke-width="1"/>
+  <text x="475" y="161" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="10" font-weight="700" fill="#6ee7b7">Outdoors</text>
+  <text x="475" y="178" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Domain</text>
 
-          <!-- Groups outer border -->
-          <rect x="20" y="212" width="560" height="100" rx="12" fill="rgba(251,191,36,.02)" stroke="rgba(251,191,36,.2)" stroke-width="1" stroke-dasharray="5 3"/>
+  <!-- +7 more: x=534 w=44 center=556 -->
+  <rect x="534" y="138" width="44" height="52" rx="9"
+        fill="rgba(52,211,153,.03)" stroke="rgba(52,211,153,.12)" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="556" y="158" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="9" fill="#44445a">+7</text>
+  <text x="556" y="174" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#44445a">more</text>
 
-          <!-- Group 1 -->
-          <rect x="36" y="226" width="120" height="56" rx="9" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.3)" stroke-width="1"/>
-          <text x="96" y="249" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#fcd34d">Group 1</text>
-          <text x="96" y="265" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#888899">Politics</text>
-          <text x="96" y="277" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord space</text>
+  <!-- ══ External world (x=630 y=58 w=175) ══ -->
+  <rect x="630" y="58" width="175" height="56" rx="10"
+        fill="rgba(56,189,248,.07)" stroke="rgba(56,189,248,.22)" stroke-width="1"/>
+  <text x="717" y="82" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">External world</text>
+  <text x="717" y="99" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">NGOs &#183; Orgs &#183; Community</text>
 
-          <!-- Group 2 -->
-          <rect x="170" y="226" width="120" height="56" rx="9" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.3)" stroke-width="1"/>
-          <text x="230" y="249" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#fcd34d">Group 2</text>
-          <text x="230" y="265" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#888899">Climate</text>
-          <text x="230" y="277" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord space</text>
+  <!-- ══ GROUPS outside server (y=288 h=58, bottom=346) ══ -->
+  <text x="10" y="274"
+        font-family="DM Sans,sans-serif" font-size="8.5" font-weight="700"
+        letter-spacing="1.5" fill="#fbbf24">GROUPS  &#8212;  each runs its own separate Discord space, outside Nexus server</text>
 
-          <!-- Group 3 -->
-          <rect x="304" y="226" width="120" height="56" rx="9" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.3)" stroke-width="1"/>
-          <text x="364" y="249" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#fcd34d">Group 3</text>
-          <text x="364" y="265" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#888899">Chess</text>
-          <text x="364" y="277" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord space</text>
+  <!-- Politics: x=10 w=110 center=65 — under Social Discussion -->
+  <rect x="10" y="288" width="110" height="58" rx="9"
+        fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.32)" stroke-width="1"/>
+  <text x="65" y="313" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fcd34d">Politics</text>
+  <text x="65" y="329" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Group</text>
+  <text x="65" y="341" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord</text>
 
-          <!-- +more groups -->
-          <rect x="438" y="226" width="124" height="56" rx="9" fill="rgba(251,191,36,.03)" stroke="rgba(251,191,36,.14)" stroke-width="1" stroke-dasharray="3 2"/>
-          <text x="500" y="258" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#44445a">+ more groups</text>
+  <!-- Climate: x=130 w=110 center=185 — under Social Discussion -->
+  <rect x="130" y="288" width="110" height="58" rx="9"
+        fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.32)" stroke-width="1"/>
+  <text x="185" y="313" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fcd34d">Climate</text>
+  <text x="185" y="329" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Group</text>
+  <text x="185" y="341" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord</text>
 
-          <!-- Domain A to Groups arrows -->
-          <line x1="289" y1="110" x2="96" y2="224" stroke="rgba(52,211,153,.35)" stroke-width="1.2" fill="none" marker-end="url(#ar1)"/>
-          <line x1="289" y1="110" x2="230" y2="224" stroke="rgba(52,211,153,.35)" stroke-width="1.2" fill="none" marker-end="url(#ar1)"/>
-          <line x1="289" y1="110" x2="364" y2="224" stroke="rgba(52,211,153,.28)" stroke-width="1" fill="none" marker-end="url(#ar1)" stroke-dasharray="3 2"/>
+  <!-- Illustration: x=250 w=110 center=305 — under Art -->
+  <rect x="250" y="288" width="110" height="58" rx="9"
+        fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.32)" stroke-width="1"/>
+  <text x="305" y="313" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fcd34d">Illustration</text>
+  <text x="305" y="329" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Group</text>
+  <text x="305" y="341" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord</text>
 
-          <!-- Groups to Domain info share arrow (upward dashed) -->
-          <path d="M96 226 Q96 200 200 190 Q250 185 289 176" stroke="rgba(52,211,153,.3)" stroke-width="1" fill="none" marker-end="url(#ar1)" stroke-dasharray="4 2"/>
-          <text x="185" y="198" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="#6ee7b7">info shared back</text>
+  <!-- Chess: x=370 w=110 center=425 — under Board Games -->
+  <rect x="370" y="288" width="110" height="58" rx="9"
+        fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.32)" stroke-width="1"/>
+  <text x="425" y="313" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fcd34d">Chess</text>
+  <text x="425" y="329" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Group</text>
+  <text x="425" y="341" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord</text>
 
-          <!-- Offline note -->
-          <text x="300" y="348" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#f87171">Groups also meet offline  -  see Diagram 2</text>
+  <!-- Running: x=490 w=110 center=545 — under Outdoors -->
+  <rect x="490" y="288" width="110" height="58" rx="9"
+        fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.32)" stroke-width="1"/>
+  <text x="545" y="313" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fcd34d">Running</text>
+  <text x="545" y="329" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8" fill="#888899">Group</text>
+  <text x="545" y="341" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="7.5" fill="#44445a">own Discord</text>
 
-          <!-- EXTERNAL (right) -->
-          <rect x="620" y="46" width="175" height="68" rx="10" fill="rgba(56,189,248,.07)" stroke="rgba(56,189,248,.22)" stroke-width="1"/>
-          <text x="707" y="72" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="700" fill="#38bdf8">External world</text>
-          <text x="707" y="89" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9" fill="#888899">NGOs  Orgs  Other schools</text>
-          <text x="707" y="104" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="#44445a">contacted via Admin only</text>
+  <!-- ── Domain → Group arrows ── -->
+  <line x1="108" y1="190" x2="65"  y2="286" stroke="rgba(251,191,36,.45)" stroke-width="1.2" fill="none" marker-end="url(#ar1)"/>
+  <line x1="108" y1="190" x2="185" y2="286" stroke="rgba(251,191,36,.45)" stroke-width="1.2" fill="none" marker-end="url(#ar1)"/>
+  <line x1="241" y1="190" x2="305" y2="286" stroke="rgba(251,191,36,.45)" stroke-width="1.2" fill="none" marker-end="url(#ar1)"/>
+  <line x1="355" y1="190" x2="425" y2="286" stroke="rgba(251,191,36,.45)" stroke-width="1.2" fill="none" marker-end="url(#ar1)"/>
+  <line x1="475" y1="190" x2="545" y2="286" stroke="rgba(251,191,36,.45)" stroke-width="1.2" fill="none" marker-end="url(#ar1)"/>
 
-          <!-- Admin to External arrow -->
-          <path d="M188 70 Q430 28 618 75" stroke="rgba(124,111,236,.38)" stroke-width="1.3" fill="none" marker-end="url(#ar1)"/>
-          <text x="400" y="24" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#a89fff">Admin is the only bridge to outside</text>
+  <!-- Info shared back (dashed, Groups → Domain) -->
+  <path d="M65 288 Q40 248 108 192"
+        stroke="rgba(52,211,153,.3)" stroke-width="1" fill="none"
+        marker-end="url(#ar1)" stroke-dasharray="4 2"/>
+  <text x="26" y="248"
+        font-family="DM Sans,sans-serif" font-size="7.5" fill="#6ee7b7">info back</text>
 
-          <!-- External note -->
-          <text x="707" y="140" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#44445a">External orgs have no access</text>
-          <text x="707" y="154" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#44445a">to the Discord server.</text>
-        </svg>
+  <!-- Bottom captions -->
+  <text x="310" y="366" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8.5" fill="#fbbf24">Groups have their own Discord space outside Nexus — but share info back with their Domain</text>
+  <text x="310" y="382" text-anchor="middle"
+        font-family="DM Sans,sans-serif" font-size="8.5" fill="#f87171">Groups also meet in real life &#8212; see Diagram 2</text>
+</svg>
       </div>
     </div>
 
@@ -289,16 +356,16 @@ footer{border-top:1px solid var(--bd);padding:2rem 0;}
 
           <!-- Schools left -->
           <rect x="22" y="44" width="118" height="44" rx="9" fill="rgba(56,189,248,.08)" stroke="rgba(56,189,248,.25)" stroke-width="1"/>
-          <text x="81" y="62" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">School A</text>
-          <text x="81" y="78" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">students join</text>
+          <text x="81" y="62" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">Students</text>
+          <text x="81" y="78" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">from anywhere in AU</text>
 
           <rect x="22" y="122" width="118" height="44" rx="9" fill="rgba(56,189,248,.08)" stroke="rgba(56,189,248,.25)" stroke-width="1"/>
-          <text x="81" y="140" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">School B</text>
-          <text x="81" y="156" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">students join</text>
+          <text x="81" y="140" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">Students</text>
+          <text x="81" y="156" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">from anywhere in AU</text>
 
           <rect x="22" y="200" width="118" height="44" rx="9" fill="rgba(56,189,248,.08)" stroke="rgba(56,189,248,.25)" stroke-width="1"/>
-          <text x="81" y="218" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">School C</text>
-          <text x="81" y="234" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">students join</text>
+          <text x="81" y="218" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">Students</text>
+          <text x="81" y="234" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5" fill="#888899">from anywhere in AU</text>
 
           <!-- Arrows schools to Nexus -->
           <line x1="140" y1="66" x2="274" y2="130" stroke="rgba(56,189,248,.4)" stroke-width="1.2" fill="none" marker-end="url(#ar2)"/>
@@ -378,8 +445,8 @@ footer{border-top:1px solid var(--bd);padding:2rem 0;}
 
           <!-- Other student orgs -->
           <rect x="660" y="40" width="140" height="56" rx="10" fill="rgba(248,113,113,.07)" stroke="rgba(248,113,113,.2)" stroke-width="1"/>
-          <text x="730" y="64" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" font-weight="700" fill="#f87171">🏫 Other Schools</text>
-          <text x="730" y="81" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#888899">Cross-school groups</text>
+          <text x="730" y="64" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" font-weight="700" fill="#f87171">🎓 Universities</text>
+          <text x="730" y="81" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#888899">Research &amp; programs</text>
 
           <!-- Community events -->
           <rect x="660" y="145" width="140" height="56" rx="10" fill="rgba(251,191,36,.07)" stroke="rgba(251,191,36,.2)" stroke-width="1"/>
